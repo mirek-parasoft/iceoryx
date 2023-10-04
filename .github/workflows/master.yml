@@ -110,8 +110,6 @@ jobs:
       working-directory: ${{github.workspace}}/iceoryx_hoofs
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
-      run: "cpptestcov report dtp-details -scm -project ${DTP_PROJECT} -build ${BUILD_ID} .coverage > .coverage/dtp-details.xml && \
-			      cpptestcov report dtp-summary -project ${DTP_PROJECT} -build ${BUILD_ID} .coverage > .coverage/dtp-summary.xml && \
-						cpptestcov report dtp-gtest   -scm -project ${DTP_PROJECT} -build ${BUILD_ID} ../build/gtest_results.xml  > .coverage/dtp-gtest.xml'",
+      run: "cpptestcov report dtp-details -scm -project ${DTP_PROJECT} -build ${BUILD_ID} .coverage > .coverage/dtp-details.xml && cpptestcov report dtp-summary -project ${DTP_PROJECT} -build ${BUILD_ID} .coverage > .coverage/dtp-summary.xml && cpptestcov report dtp-gtest   -scm -project ${DTP_PROJECT} -build ${BUILD_ID} ../build/gtest_results.xml  > .coverage/dtp-gtest.xml'",
 
             
