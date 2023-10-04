@@ -2,7 +2,7 @@ name: CMake
 
 on:
   push:
-    branches: [ master, vs_code_setup ]
+    branches: [ master, vs_code_setup* ]
   pull_request:
     branches: [ master, release* ]
 
