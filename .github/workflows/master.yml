@@ -124,7 +124,7 @@ jobs:
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: "cpptestcov report dtp-gtest -scm -project ${DTP_PROJECT} -build ${{ env.build_id }} ../build/gtest_results.xml  > .coverage/dtp-gtest.xml"
 
-    - name: Publish DTP reports
+    - name: Publish DTP reports 
       working-directory: ${{github.workspace}}/iceoryx_hoofs
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
