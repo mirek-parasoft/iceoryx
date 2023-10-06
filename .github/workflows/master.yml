@@ -64,7 +64,7 @@ jobs:
       working-directory: ${{github.workspace}}/build
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
-      run: ./hoofs/test/hoofs_integrationtests && ./hoofs/test/hoofs_mocktests && ./hoofs/test/hoofs_moduletests
+      run: ./hoofs/test/hoofs_integrationtests && ./hoofs/test/hoofs_mocktests && ./hoofs/test/hoofs_moduletests --gtest_output=xml:gtest_results.xml
 
     - name: Generate Coverage Reports
       working-directory: ${{github.workspace}}/build
