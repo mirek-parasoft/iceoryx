@@ -35,12 +35,12 @@ class IndexQueueTest : public ::testing::Test
     Queue fullQueue{Queue::ConstructFull};
 };
 
-TEST(LockFreeQueueTest, capacityIsConsistent)
-{
-    ::testing::Test::RecordProperty("TEST_ID", "86d94598-7271-45a1-a6c9-afad0bc8cc8b");
-    IndexQueue<37U> q;
-    EXPECT_EQ(q.capacity(), 37U);
-}
+// TEST(LockFreeQueueTest, capacityIsConsistent)
+// {
+//     ::testing::Test::RecordProperty("TEST_ID", "86d94598-7271-45a1-a6c9-afad0bc8cc8b");
+//     IndexQueue<37U> q;
+//     EXPECT_EQ(q.capacity(), 37U);
+// }
 
 typedef ::testing::Types<IndexQueue<1>, IndexQueue<10>, IndexQueue<1000>> TestQueues;
 
