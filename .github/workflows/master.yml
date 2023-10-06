@@ -1,4 +1,4 @@
-name: CMake
+name: Unit testing with coverage
 
 on:
   push:
