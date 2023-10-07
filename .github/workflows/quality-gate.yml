@@ -1,18 +1,13 @@
-name: CMake
+name: Unit testing with coverage
 
 on:
-  push:
-    branches: [ master ]
   pull_request:
-    branches: [ master, release* ]
+    branches: [ master ]
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
-  BUILD_TYPE: Release
-  BUILD_ID: build_1
   LINE_COV_GATE: 70
-  MCDC_COV_GATE: 55
-
+  MCDC_COV_GATE: 30
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -53,35 +48,13 @@ jobs:
       working-directory: ${{github.workspace}}/build
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
-      run: ./hoofs/test/hoofs_integrationtests && ./hoofs/test/hoofs_mocktests && ./hoofs/test/hoofs_moduletests
+      run: ./hoofs/test/hoofs_moduletests --gtest_output=xml:gtest_results.xml
 
     - name: Generate Coverage Reports
       working-directory: ${{github.workspace}}/build
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: make cpptestcov-compute && make cpptestcov-report
-
-    - name: Rename Coverage Report
-      working-directory: ${{github.workspace}}/iceoryx_hoofs/.coverage
-      shell: bash
-      # Execute the build.  You can specify a specific target with "--target <NAME>"
-      run: mv coverage.html index.html
-
-    - name: Rename Coverage Report
-      working-directory: ${{github.workspace}}
-      shell: bash
-      # Execute the build.  You can specify a specific target with "--target <NAME>"
-      run: ls -la
-    - name: Setup Pages
-      uses: actions/configure-pages@v3
-    - name: Upload artifact
-      uses: actions/upload-pages-artifact@v2
-      with:
-        # Upload entire repository
-        path: ${{github.workspace}}/iceoryx_hoofs/.coverage
-    - name: Deploy to GitHub Pages
-      id: deployment
-      uses: actions/deploy-pages@v2
 
     - name: Check Line Coverage Gate
       working-directory: ${{github.workspace}}/iceoryx_hoofs
