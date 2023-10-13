@@ -25,7 +25,7 @@ namespace iox
 {
 template <typename T, uint64_t Capacity>
 inline vector<T, Capacity>::vector(const uint64_t count, const T& value) noexcept
-{
+{   
     if (count > Capacity)
     {
         IOX_LOG(ERROR) << "Attempting to initialize a vector of capacity " << Capacity << " with " << count
@@ -164,7 +164,6 @@ inline bool vector<T, Capacity>::emplace_back(Targs&&... args) noexcept
 {
     if (m_size < Capacity)
     {
-        // AXIVION Next Line AutosarC++19_03-A5.0.1, FaultDetection-IndirectAssignmentOverflow: Size guaranteed by T. Evaluation order is inconsequential.
         new (&at(m_size++)) T(std::forward<Targs>(args)...);
         return true;
     }
@@ -176,7 +175,7 @@ template <typename... Targs>
 inline bool vector<T, Capacity>::emplace(const uint64_t position, Targs&&... args) noexcept
 {
     const uint64_t sizeBeforeEmplace{m_size};
-    if ((m_size >= Capacity) || ((position >= Capacity) || (position > sizeBeforeEmplace)))
+    if ((position >= Capacity) || (position > sizeBeforeEmplace) || (m_size >= Capacity))
     {
         return false;
     }
@@ -412,7 +411,7 @@ inline constexpr bool operator==(const vector<T, CapacityLeft>& lhs, const vecto
         }
     }
     return true;
-}
+} 
 
 // AXIVION Next Construct AutosarC++19_03-A13.5.5 : intentional implementation with different parameters to enable
 // comparison of vectors with different capacity
