@@ -18,5 +18,5 @@ __pycache__
 /bazel-*
 .cpptest/*
 .coverage/*.*
-iceoryx_hoofs/.coverage/*.*
+iceoryx_hoofs/.coverage/*
 iceoryx_hoofs/.cpptest/*
