@@ -47,7 +47,7 @@ jobs:
         files: |
           **.inl
 
-    - name: List all changed files
+    - name: Prepare excludes
       if: steps.changed-files.outputs.any_changed == 'true'
       env:
         ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
@@ -55,93 +55,93 @@ jobs:
       run: |
         echo "cpptestcc.exclude regex:*" > $CPPTEST_CC_PSRC
         for file in "$ALL_CHANGED_FILES"; do
-          echo "cpptestcc.exclude regex:**/$file" >> $CPPTEST_CC_PSRC
+          echo "cpptestcc.include regex:*/$file" >> $CPPTEST_CC_PSRC
         done
         ls -la $CPPTEST_CC_PSRC
         cat $CPPTEST_CC_PSRC
 
-    # - name: Configure CMake
-    #   shell: bash
-    #   working-directory: ${{github.workspace}}
-    #   run: cmake -Bbuild -Hiceoryx_meta -DBUILD_TEST=ON -DCPPTEST_COVERAGE=ON 
+    - name: Configure CMake
+      shell: bash
+      working-directory: ${{github.workspace}}
+      run: cmake -Bbuild -Hiceoryx_meta -DBUILD_TEST=ON -DCPPTEST_COVERAGE=ON 
 
-    # - name: Build 
-    #   working-directory: ${{github.workspace}}/build
-    #   shell: bash
-    #   # Execute the build.  You can specify a specific target with "--target <NAME>"
-    #   run: make -j8
+    - name: Build 
+      working-directory: ${{github.workspace}}/build
+      shell: bash
+      # Execute the build.  You can specify a specific target with "--target <NAME>"
+      run: make -j8
 
-    # - name: Coverage Logs Cleanup
-    #   working-directory: ${{github.workspace}}/build
-    #   shell: bash
-    #   # Execute the build.  You can specify a specific target with "--target <NAME>"
-    #   run: rm -rf cpptest-coverage/*/*.clog
+    - name: Coverage Logs Cleanup
+      working-directory: ${{github.workspace}}/build
+      shell: bash
+      # Execute the build.  You can specify a specific target with "--target <NAME>"
+      run: rm -rf cpptest-coverage/*/*.clog
 
-    # - name: Run Unit Tests for hoofs
-    #   working-directory: ${{github.workspace}}/build
-    #   shell: bash
-    #   # Execute the build.  You can specify a specific target with "--target <NAME>"
-    #   run: ./hoofs/test/hoofs_integrationtests && ./hoofs/test/hoofs_mocktests && ./hoofs/test/hoofs_moduletests --gtest_output=xml:gtest_results.xml
+    - name: Run Unit Tests for hoofs
+      working-directory: ${{github.workspace}}/build
+      shell: bash
+      # Execute the build.  You can specify a specific target with "--target <NAME>"
+      run: ./hoofs/test/hoofs_integrationtests && ./hoofs/test/hoofs_mocktests && ./hoofs/test/hoofs_moduletests --gtest_output=xml:gtest_results.xml
 
-    # - name: Generate Coverage Reports
-    #   working-directory: ${{github.workspace}}/build
-    #   shell: bash
-    #   # Execute the build.  You can specify a specific target with "--target <NAME>"
-    #   run: make cpptestcov-compute && make cpptestcov-report
+    - name: Generate Coverage Reports
+      working-directory: ${{github.workspace}}/build
+      shell: bash
+      # Execute the build.  You can specify a specific target with "--target <NAME>"
+      run: make cpptestcov-compute && make cpptestcov-report
 
-    # - name: Rename Coverage Report
-    #   working-directory: ${{github.workspace}}/iceoryx_hoofs/.coverage
-    #   shell: bash
-    #   # Execute the build.  You can specify a specific target with "--target <NAME>"
-    #   run: mv coverage.html index.html
+    - name: Rename Coverage Report
+      working-directory: ${{github.workspace}}/iceoryx_hoofs/.coverage
+      shell: bash
+      # Execute the build.  You can specify a specific target with "--target <NAME>"
+      run: mv coverage.html index.html
 
-    # - name: Publish coverge report to GH pages
-    #   working-directory: ${{github.workspace}}
-    #   shell: bash
-    # - name: Setup Pages
-    #   uses: actions/configure-pages@v3
-    # - name: Upload artifact
-    #   uses: actions/upload-pages-artifact@v2
-    #   with:
-    #     # Upload coverage reports
-    #     path: ${{github.workspace}}/iceoryx_hoofs/.coverage
-    # - name: Deploy to GitHub Pages
-    #   id: deployment
-    #   uses: actions/deploy-pages@v2
+    - name: Publish coverge report to GH pages
+      working-directory: ${{github.workspace}}
+      shell: bash
+    - name: Setup Pages
+      uses: actions/configure-pages@v3
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v2
+      with:
+        # Upload coverage reports
+        path: ${{github.workspace}}/iceoryx_hoofs/.coverage
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v2
 
-    # - name: Check Line Coverage Gate
-    #   working-directory: ${{github.workspace}}/iceoryx_hoofs
-    #   shell: bash
-    #   # Execute the build.  You can specify a specific target with "--target <NAME>"
-    #   run: NUMBER=$(cat .coverage/coverage.txt | grep "TOTAL" | sed -n 's/.*LC=\([0-9]*\)%.*/\1/p') && if [ $NUMBER -lt $LINE_COV_GATE ]; then echo "Line coverage quality gate failed"; echo "Expected result $LINE_COV_GATE%, echieved $NUMBER%"; echo "Check html report https://mirek-parasoft.github.io/iceoryx/"; false; else echo "Line coverage quality gate passed with $NUMBER% (required $LINE_COV_GATE%)"; echo "check html report https://mirek-parasoft.github.io/webinar-cicov/ for details"; true; fi
+    - name: Check Line Coverage Gate
+      working-directory: ${{github.workspace}}/iceoryx_hoofs
+      shell: bash
+      # Execute the build.  You can specify a specific target with "--target <NAME>"
+      run: NUMBER=$(cat .coverage/coverage.txt | grep "TOTAL" | sed -n 's/.*LC=\([0-9]*\)%.*/\1/p') && if [ $NUMBER -lt $LINE_COV_GATE ]; then echo "Line coverage quality gate failed"; echo "Expected result $LINE_COV_GATE%, echieved $NUMBER%"; echo "Check html report https://mirek-parasoft.github.io/iceoryx/"; false; else echo "Line coverage quality gate passed with $NUMBER% (required $LINE_COV_GATE%)"; echo "check html report https://mirek-parasoft.github.io/webinar-cicov/ for details"; true; fi
       
-    # - name: Check MCDC Coverage Gate 
-    #   working-directory: ${{github.workspace}}/iceoryx_hoofs
-    #   shell: bash
-    #   # Execute the build.  You can specify a specific target with "--target <NAME>"
-    #   run: NUMBER=$(cat .coverage/coverage.txt | grep "TOTAL" | sed -n 's/.*MCDC=\([0-9]*\)%.*/\1/p') && if [ $NUMBER -lt $MCDC_COV_GATE ]; then echo "Line coverage quality gate failed"; echo "Expected result $MCDC_COV_GATE%, echieved $NUMBER%"; echo "Check html report https://mirek-parasoft.github.io/webinar-cicov/"; false; else echo "Line coverage quality gate passed with $NUMBER% (required $MCDC_COV_GATE%)"; echo "check html report https://mirek-parasoft.github.io/iceoryx/ for details" true; fi
+    - name: Check MCDC Coverage Gate 
+      working-directory: ${{github.workspace}}/iceoryx_hoofs
+      shell: bash
+      # Execute the build.  You can specify a specific target with "--target <NAME>"
+      run: NUMBER=$(cat .coverage/coverage.txt | grep "TOTAL" | sed -n 's/.*MCDC=\([0-9]*\)%.*/\1/p') && if [ $NUMBER -lt $MCDC_COV_GATE ]; then echo "Line coverage quality gate failed"; echo "Expected result $MCDC_COV_GATE%, echieved $NUMBER%"; echo "Check html report https://mirek-parasoft.github.io/webinar-cicov/"; false; else echo "Line coverage quality gate passed with $NUMBER% (required $MCDC_COV_GATE%)"; echo "check html report https://mirek-parasoft.github.io/iceoryx/ for details" true; fi
 
-    # - name: Generate DTP LC report
-    #   working-directory: ${{github.workspace}}/iceoryx_hoofs
-    #   shell: bash
-    #   # Execute the build.  You can specify a specific target with "--target <NAME>"
-    #   run: "cpptestcov report dtp-details -scm -project ${DTP_PROJECT} -build ${{ env.build_id }} .coverage > .coverage/dtp-details.xml"
+    - name: Generate DTP LC report
+      working-directory: ${{github.workspace}}/iceoryx_hoofs
+      shell: bash
+      # Execute the build.  You can specify a specific target with "--target <NAME>"
+      run: "cpptestcov report dtp-details -scm -project ${DTP_PROJECT} -build ${{ env.build_id }} .coverage > .coverage/dtp-details.xml"
       
-    # - name: Generate DTP Overview report
-    #   working-directory: ${{github.workspace}}/iceoryx_hoofs
-    #   shell: bash
-    #   # Execute the build.  You can specify a specific target with "--target <NAME>"
-    #   run: "cpptestcov report dtp-summary -project ${DTP_PROJECT} -build ${{ env.build_id }} .coverage > .coverage/dtp-summary.xml"
+    - name: Generate DTP Overview report
+      working-directory: ${{github.workspace}}/iceoryx_hoofs
+      shell: bash
+      # Execute the build.  You can specify a specific target with "--target <NAME>"
+      run: "cpptestcov report dtp-summary -project ${DTP_PROJECT} -build ${{ env.build_id }} .coverage > .coverage/dtp-summary.xml"
       
-    # - name: Generate DTP GTest report
-    #   working-directory: ${{github.workspace}}/iceoryx_hoofs
-    #   shell: bash
-    #   # Execute the build.  You can specify a specific target with "--target <NAME>"
-    #   run: "cpptestcov report dtp-gtest -scm -project ${DTP_PROJECT} -build ${{ env.build_id }} ../build/gtest_results.xml  > .coverage/dtp-gtest.xml"
+    - name: Generate DTP GTest report
+      working-directory: ${{github.workspace}}/iceoryx_hoofs
+      shell: bash
+      # Execute the build.  You can specify a specific target with "--target <NAME>"
+      run: "cpptestcov report dtp-gtest -scm -project ${DTP_PROJECT} -build ${{ env.build_id }} ../build/gtest_results.xml  > .coverage/dtp-gtest.xml"
 
-    # - name: Publish DTP reports 
-    #   working-directory: ${{github.workspace}}/iceoryx_hoofs
-    #   shell: bash
-    #   # Execute the build.  You can specify a specific target with "--target <NAME>"
-    #   run: "cpptestcov publish  -settings ../dtp.settings .coverage/dtp-details.xml .coverage/dtp-summary.xml .coverage/dtp-gtest.xml"
+    - name: Publish DTP reports 
+      working-directory: ${{github.workspace}}/iceoryx_hoofs
+      shell: bash
+      # Execute the build.  You can specify a specific target with "--target <NAME>"
+      run: "cpptestcov publish  -settings ../dtp.settings .coverage/dtp-details.xml .coverage/dtp-summary.xml .coverage/dtp-gtest.xml"
   
