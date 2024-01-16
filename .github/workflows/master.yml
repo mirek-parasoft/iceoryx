@@ -46,6 +46,7 @@ jobs:
       with:
         files: |
           **.inl
+          **.cpp
 
     - name: Prepare excludes
       if: steps.changed-files.outputs.any_changed == 'true'
