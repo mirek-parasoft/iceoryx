@@ -269,5 +269,4 @@ constexpr bool operator!=(const vector<T, CapacityLeft>& lhs, const vector<T, Ca
 
 #include "iox/detail/vector.inl"
 
-
 #endif // IOX_HOOFS_CONTAINER_VECTOR_HPP

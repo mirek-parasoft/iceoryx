@@ -45,7 +45,6 @@ jobs:
       # To compare changes between the current commit and the last pushed remote commit set `since_last_remote_commit: true`. e.g
       with:
         files: |
-          **.yml
           **.inl
 
     - name: List all changed files
