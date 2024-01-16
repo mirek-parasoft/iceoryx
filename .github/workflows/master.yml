@@ -39,10 +39,18 @@ jobs:
       working-directory: ${{github.workspace}}
       run: echo "The new build id is ${{ env.build_id }}"
 
-    - name: Configure CMake
-      shell: bash
-      working-directory: ${{github.workspace}}
-      run: cmake -Bbuild -Hiceoryx_meta -DBUILD_TEST=ON -DCPPTEST_COVERAGE=ON 
+    - uses: yumemi-inc/changed-files@v3
+      id: changed
+    - run: |
+        for file in ${{ steps.changed.outputs.files }}; do
+          # do somethihg..
+          echo "$file"
+        done
+
+    # - name: Configure CMake
+    #   shell: bash
+    #   working-directory: ${{github.workspace}}
+    #   run: cmake -Bbuild -Hiceoryx_meta -DBUILD_TEST=ON -DCPPTEST_COVERAGE=ON 
 
     # - name: Build 
     #   working-directory: ${{github.workspace}}/build
