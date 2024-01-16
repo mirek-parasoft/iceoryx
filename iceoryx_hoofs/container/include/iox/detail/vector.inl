@@ -194,8 +194,6 @@ inline bool vector<T, Capacity>::emplace(const uint64_t position, Targs&&... arg
     at(position).~T();
     new (&at(position)) T(std::forward<Targs>(args)...);
     return true;
-
-
 }
 
 template <typename T, uint64_t Capacity>
