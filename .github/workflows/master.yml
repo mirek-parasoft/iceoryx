@@ -47,8 +47,6 @@ jobs:
         files: |
           **.yml
           **.inl
-          
-        #   since_last_remote_commit: true 
 
     - name: List all changed files
       env:
