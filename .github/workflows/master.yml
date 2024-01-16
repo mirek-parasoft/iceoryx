@@ -52,8 +52,10 @@ jobs:
         ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
       run: |
         for file in "$ALL_CHANGED_FILES"; do
-          echo "$file was changed"
+          echo "$file was changed" >> cpptest_excludes.psrc
         done
+        ls -la
+        cat cpptest_excludes.psrc
 
     # - name: Configure CMake
     #   shell: bash
