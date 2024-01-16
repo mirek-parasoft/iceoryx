@@ -48,14 +48,17 @@ jobs:
           **.inl
 
     - name: List all changed files
+      if: steps.changed-files.outputs.any_changed == 'true'
       env:
         ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
+        CPPTEST_CC_PSRC: iceoryx_hoofs/cmake/.cpptestcc
       run: |
+        echo "cpptestcc.exclude regex:*" > $CPPTEST_CC_PSRC
         for file in "$ALL_CHANGED_FILES"; do
-          echo "$file was changed" >> cpptest_excludes.psrc
+          echo "cpptestcc.exclude regex:**/$file" >> $CPPTEST_CC_PSRC
         done
-        ls -la
-        cat cpptest_excludes.psrc
+        ls -la $CPPTEST_CC_PSRC
+        cat $CPPTEST_CC_PSRC
 
     # - name: Configure CMake
     #   shell: bash
