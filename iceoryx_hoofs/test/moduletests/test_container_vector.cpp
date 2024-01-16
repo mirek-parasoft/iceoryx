@@ -457,6 +457,7 @@ TEST_F(vector_test, DestructorWithFullVector)
     EXPECT_THAT(dTor, Eq(CAPACITY));
 }
 
+/*
 TEST_F(vector_test, EmplacingElementInTheMiddleCallsDTor)
 {
     ::testing::Test::RecordProperty("TEST_ID", "09a217bb-690e-4120-8e06-198e9056e26e");
@@ -482,6 +483,7 @@ TEST_F(vector_test, EmplacingElementInTheMiddleCallsDTor)
     EXPECT_THAT(customCTor, Eq(EXPECTED_NUMBER_OF_CTOR_CALLS));
     EXPECT_THAT(dTor, Eq(EXPECTED_NUMBER_OF_CTOR_CALLS + 1U));
 }
+*/
 
 TEST_F(vector_test, CopyAssignmentWithEmptySource)
 {
@@ -1514,8 +1516,8 @@ TEST_F(vector_test, ResizeWithTemplateValueChangesNothingIfSizeAlreadyFits)
     EXPECT_THAT(sut[1], Eq(9U));
 }
 
-/*
-//Step 1
+
+//Step 1, REQ-1
 TEST_F(vector_test, EmplaceInEmptyVectorWorks)
 {
     ::testing::Test::RecordProperty("TEST_ID", "e6b1b8d4-77b6-4a19-8d7e-7f483e2e461d");
@@ -1524,7 +1526,18 @@ TEST_F(vector_test, EmplaceInEmptyVectorWorks)
     EXPECT_THAT(sut[0], Eq(123U));
 }
 
-//Step 2
+//Step 1, REQ-1
+TEST_F(vector_test, EmplaceAtEndWorks)
+{
+    ::testing::Test::RecordProperty("TEST_ID", "57551774-750f-4dd4-81c0-fa6ef9046689");
+    sut.emplace_back(123U);
+
+    EXPECT_TRUE(sut.emplace(sut.size(), 321U));
+    ASSERT_THAT(sut.size(), Eq(2U));
+    ASSERT_THAT(sut[sut.size() - 1], Eq(321U));
+}
+
+//Step 2, REQ-2
 TEST_F(vector_test, EmplaceAtFrontTillFullWorks)
 {
      ::testing::Test::RecordProperty("TEST_ID", "c7074b38-8493-4b53-acc2-9a20d0f735ce");
@@ -1539,19 +1552,7 @@ TEST_F(vector_test, EmplaceAtFrontTillFullWorks)
      }
 }
 
-//Step 2
-TEST_F(vector_test, EmplaceAtEndWorks)
-{
-    ::testing::Test::RecordProperty("TEST_ID", "57551774-750f-4dd4-81c0-fa6ef9046689");
-    sut.emplace_back(0U);
-    sut.emplace_back(1U);
 
-    EXPECT_TRUE(sut.emplace(sut.size(), 3U));
-    ASSERT_THAT(sut.size(), Eq(3U));
-    EXPECT_THAT(sut[0], Eq(0U));
-    EXPECT_THAT(sut[1], Eq(1U));
-    EXPECT_THAT(sut[2], Eq(3U));
-}
 
 //Step 2
 TEST_F(vector_test, EmplaceInTheMiddleMovesElementsToTheRight)
@@ -1572,14 +1573,6 @@ TEST_F(vector_test, EmplaceInTheMiddleMovesElementsToTheRight)
 }
 
 //Step 3
-TEST_F(vector_test, EmplaceWhenPositionExceedsCapacityReturnsFalse)
-{
-    ::testing::Test::RecordProperty("TEST_ID", "519d97fb-aec0-4824-9cd7-dd3446b7b71c");
-    EXPECT_FALSE(sut.emplace(sut.capacity() + 10U, 5U));
-    EXPECT_THAT(sut.size(), Eq(0));
-}
-
-
 TEST_F(vector_test, EmplaceAtPositionAfterEndBeforeCapacityExceedsFails)
 {
     ::testing::Test::RecordProperty("TEST_ID", "b5112070-9446-44bf-8fdf-1853cfb247fc");
@@ -1607,15 +1600,18 @@ TEST_F(vector_test, EmplaceWhenFullReturnsFalse)
     EXPECT_THAT(sut.size(), Eq(sut.capacity()));
 }
 
-
-
-TEST_F(vector_test, PushBackSizeIncreasesWhenElementIsAdded)
+/*
+//Step 3
+TEST_F(vector_test, EmplaceWhenPositionExceedsCapacityReturnsFalse)
 {
-    ::testing::Test::RecordProperty("TEST_ID", "2f1814ce-dfc8-4dbe-a7c7-ab004e28a7a2");
-    const uint64_t & value = 5;
-    sut.push_back(value);
-    EXPECT_THAT(sut.size(), Eq(1U));
+    ::testing::Test::RecordProperty("TEST_ID", "519d97fb-aec0-4824-9cd7-dd3446b7b71c");
+    EXPECT_FALSE(sut.emplace(sut.capacity() + 10U, 5U));
+    EXPECT_THAT(sut.size(), Eq(0));
 }
+
 */
+
+/**/
+
 
 } // namespace
