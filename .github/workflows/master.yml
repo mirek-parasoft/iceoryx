@@ -52,7 +52,7 @@ jobs:
       if: steps.changed-files.outputs.any_changed == 'true'
       env:
         ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
-        CPPTEST_CC_PSRC: iceoryx_hoofs/cmake/.cpptestcc
+        CPPTEST_CC_PSRC: iceoryx_hoofs/.cpptestcc
       run: |
         list=( $ALL_CHANGED_FILES )
         echo "cpptestcc.exclude regex:*" > $CPPTEST_CC_PSRC
