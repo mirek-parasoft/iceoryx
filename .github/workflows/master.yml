@@ -48,7 +48,7 @@ jobs:
           **.inl
           **.cpp
         files_ignore: |
-          **test_*.cpp
+          **test_**.cpp
 
     - name: Prepare excludes
       if: steps.changed-files.outputs.any_changed == 'true'

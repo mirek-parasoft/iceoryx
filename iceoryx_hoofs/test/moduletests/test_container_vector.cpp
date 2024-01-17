@@ -1517,7 +1517,6 @@ TEST_F(vector_test, ResizeWithTemplateValueChangesNothingIfSizeAlreadyFits)
 }
 
 
-
 //Step 1, REQ-1
 TEST_F(vector_test, EmplaceInEmptyVectorWorks)
 {
