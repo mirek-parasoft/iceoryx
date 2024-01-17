@@ -149,7 +149,7 @@ function (cpptest_enable_coverage)
         "${CPPTEST_SOURCE_DIR}/.coverage" >
         "${CPPTEST_SOURCE_DIR}/.coverage/coverage.md"
     &&
-    ${CPPTEST_HOME_DIR}/bin/cpptestcov report html
+    ${CPPTEST_HOME_DIR}/bin/cpptestcov report html-multipage
         -coverage=${CPPTEST_COVERAGE_TYPE_REPORT}
         "${CPPTEST_SOURCE_DIR}/.coverage" >
         "${CPPTEST_SOURCE_DIR}/.coverage/coverage.html"

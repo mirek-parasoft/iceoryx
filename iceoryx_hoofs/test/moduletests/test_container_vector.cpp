@@ -1516,7 +1516,6 @@ TEST_F(vector_test, ResizeWithTemplateValueChangesNothingIfSizeAlreadyFits)
     EXPECT_THAT(sut[1], Eq(9U));
 }
 
-
 //Step 1, REQ-1
 TEST_F(vector_test, EmplaceInEmptyVectorWorks)
 {
