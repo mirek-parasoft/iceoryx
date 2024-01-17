@@ -1506,7 +1506,7 @@ TEST_F(vector_test, ResizeWithDefaultCTorChangesNothingIfSizeAlreadyFits)
 
 TEST_F(vector_test, ResizeWithTemplateValueChangesNothingIfSizeAlreadyFits)
 {
-    ::testing::Test::RecordProperty("TEST_ID", "6ccd9ac4-788c-428b-9d11-37885284088f");
+    ::testing::Test::RecordProperty("@Req", "CICOV-5");
     sut.emplace_back(7U);
     sut.emplace_back(9U);
     EXPECT_TRUE(sut.resize(2U, 421337U));
