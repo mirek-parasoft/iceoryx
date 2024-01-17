@@ -57,7 +57,7 @@ jobs:
         list=( $ALL_CHANGED_FILES )
         echo "cpptestcc.exclude regex:*" > $CPPTEST_CC_PSRC
         for file in ${list[@]}; do
-          echo "cpptestcc.include regex: $file" >> $CPPTEST_CC_PSRC
+          echo "cpptestcc.include regex:*$file" >> $CPPTEST_CC_PSRC
         done
         ls -la $CPPTEST_CC_PSRC
         cat $CPPTEST_CC_PSRC
