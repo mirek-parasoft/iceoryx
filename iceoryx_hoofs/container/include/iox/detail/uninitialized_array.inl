@@ -83,7 +83,6 @@ inline constexpr uint64_t size(const UninitializedArray<T, N, Buffer>&) noexcept
 {
     return N;
 }
-
 } // namespace iox
 
 #endif // IOX_HOOFS_CONTAINER_UNINITIALIZED_ARRAY_INL

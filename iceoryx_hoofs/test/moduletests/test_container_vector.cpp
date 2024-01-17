@@ -1600,6 +1600,7 @@ TEST_F(vector_test, EmplaceWhenFullReturnsFalse)
     EXPECT_THAT(sut.size(), Eq(sut.capacity()));
 }
 
+
 /*
 //Step 3
 TEST_F(vector_test, EmplaceWhenPositionExceedsCapacityReturnsFalse)
