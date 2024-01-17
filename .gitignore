@@ -20,3 +20,4 @@ __pycache__
 .coverage/*.*
 iceoryx_hoofs/.coverage/*
 iceoryx_hoofs/.cpptest/*
+iceoryx_hoofs/cmake/.cpptestcc

@@ -93,11 +93,11 @@ jobs:
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: make cpptestcov-compute && make cpptestcov-report
 
-    - name: Rename Coverage Report
-      working-directory: ${{github.workspace}}/iceoryx_hoofs/.coverage
-      shell: bash
-      # Execute the build.  You can specify a specific target with "--target <NAME>"
-      run: mv coverage.html index.html
+    # - name: Rename Coverage Report
+    #   working-directory: ${{github.workspace}}/iceoryx_hoofs/.coverage
+    #   shell: bash
+    #   # Execute the build.  You can specify a specific target with "--target <NAME>"
+    #   run: mv coverage.html index.html
 
     - name: Setup Pages
       uses: actions/configure-pages@v3
@@ -106,7 +106,7 @@ jobs:
       uses: actions/upload-pages-artifact@v2
       with:
         # Upload coverage reports
-        path: ${{github.workspace}}/iceoryx_hoofs/.coverage
+        path: ${{github.workspace}}/iceoryx_hoofs/.coverage/cov_report
     
     - name: Deploy to GitHub Pages
       id: deployment
