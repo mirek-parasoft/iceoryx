@@ -23,6 +23,7 @@
  
 namespace iox
 {
+    
 // AXIVION DISABLE STYLE AutosarC++19_03-A12.6.1: members are initialized before read access
 // NOLINTNEXTLINE(cppcoreguidelines-pro-type-member-init, hicpp-member-init)
 template <uint64_t Capacity, typename ReturnType, typename... Args>
