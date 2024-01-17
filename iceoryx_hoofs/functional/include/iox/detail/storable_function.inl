@@ -21,7 +21,6 @@
 #include "iox/detail/storable_function.hpp"
 #include "iox/memory.hpp"
  
- 
 namespace iox
 {
 // AXIVION DISABLE STYLE AutosarC++19_03-A12.6.1: members are initialized before read access

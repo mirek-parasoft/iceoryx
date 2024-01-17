@@ -43,39 +43,24 @@ jobs:
       id: changed-files
       uses: tj-actions/changed-files@v41
       # To compare changes between the current commit and the last pushed remote commit set `since_last_remote_commit: true`. e.g
-      # with:
-      #   since_last_remote_commit: true 
+      with:
+        files: |
+          **.inl
+          **.cpp
 
-    - name: List all changed files
+    - name: Prepare excludes
+      if: steps.changed-files.outputs.any_changed == 'true'
       env:
         ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
+        CPPTEST_CC_PSRC: iceoryx_hoofs/cmake/.cpptestcc
       run: |
         list=( $ALL_CHANGED_FILES )
+        echo "cpptestcc.exclude regex:*" > $CPPTEST_CC_PSRC
         for file in ${list[@]}; do
-          echo "$file was changed"
+          echo "cpptestcc.include regex: $file" >> $CPPTEST_CC_PSRC
         done
-
-    # - name: Get changed files
-    #   id: changed-files
-    #   uses: tj-actions/changed-files@v41
-    #   # To compare changes between the current commit and the last pushed remote commit set `since_last_remote_commit: true`. e.g
-    # #  with:
-    # #    separator: '\n'
-    #     # files: |
-    #     #   **.inl 
-
-    # - name: Prepare excludes
-    #   if: steps.changed-files.outputs.any_changed == 'true'
-    #   env:
-    #     ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
-    #     CPPTEST_CC_PSRC: iceoryx_hoofs/cmake/.cpptestcc
-    #   run: |
-    #     echo "cpptestcc.exclude regex:*" > $CPPTEST_CC_PSRC
-    #     for file in "$ALL_CHANGED_FILES"; do
-    #       echo "cpptestcc.include regex: $file" >> $CPPTEST_CC_PSRC
-    #     done
-    #     ls -la $CPPTEST_CC_PSRC
-    #     cat $CPPTEST_CC_PSRC
+        ls -la $CPPTEST_CC_PSRC
+        cat $CPPTEST_CC_PSRC
 
     # - name: Configure CMake
     #   shell: bash
