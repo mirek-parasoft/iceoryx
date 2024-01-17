@@ -172,5 +172,4 @@ iox::log::LogStream& operator<<(iox::log::LogStream& stream, const access_rights
     printAccessControl(stream, value);
     return stream;
 } 
-
 } // namespace iox
