@@ -44,10 +44,9 @@ jobs:
       uses: tj-actions/changed-files@v41
       # To compare changes between the current commit and the last pushed remote commit set `since_last_remote_commit: true`. e.g
       with:
-        separator: '\n'
+    #    separator: '\n'
         files: |
           **.inl
-          **.cpp
 
     - name: Prepare excludes
       if: steps.changed-files.outputs.any_changed == 'true'
