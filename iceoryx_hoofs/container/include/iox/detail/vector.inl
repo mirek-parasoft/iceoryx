@@ -50,7 +50,6 @@ inline vector<T, Capacity>::vector(const uint64_t count) noexcept
     m_size = std::min(count, Capacity);
     for (uint64_t i{0U}; i < m_size; ++i)
     {
-        // AXIVION Next Line AutosarC++19_03-A18.5.2, FaultDetection-IndirectAssignmentOverflow : False positive, it is a placement new. Size guaranteed by T.
         new (&at(i)) T();
     }
 }
@@ -85,7 +84,6 @@ inline vector<T, Capacity>& vector<T, Capacity>::operator=(const vector& rhs) no
         // copy using copy assignment
         for (; i < minSize; ++i)
         {
-            // AXIVION Next Line AutosarC++19_03-A5.0.1 : Expands to basic variable assignment. Evaluation order is inconsequential.
             at(i) = rhs.at(i);
         }
 
@@ -115,7 +113,6 @@ inline vector<T, Capacity>& vector<T, Capacity>::operator=(vector&& rhs) noexcep
         // move using move assignment
         for (; i < minSize; ++i)
         {
-            // AXIVION Next Line AutosarC++19_03-A5.0.1 : Expands to basic variable assignment. Evaluation order is inconsequential.
             at(i) = std::move(rhs.at(i));
         }
 
@@ -205,7 +202,6 @@ inline bool vector<T, Capacity>::push_back(const T& value) noexcept
 template <typename T, uint64_t Capacity>
 inline bool vector<T, Capacity>::push_back(T&& value) noexcept
 {
-    // AXIVION Next Construct AutosarC++19_03-A18.9.2: we use idiomatic perfect forwarding
     return emplace_back(std::forward<T>(value));
 }
 
@@ -246,10 +242,10 @@ inline bool vector<T, Capacity>::resize(const uint64_t count, const Targs&... ar
 template <typename T, uint64_t Capacity>
 inline T* vector<T, Capacity>::data() noexcept
 {
-    // AXIVION DISABLE STYLE AutosarC++19_03-A5.2.3 : const cast to avoid code duplication
+    //  DISABLE STYLE AutosarC++19_03-A5.2.3 : const cast to avoid code duplication
     // NOLINTNEXTLINE(cppcoreguidelines-pro-type-const-cast)
     return const_cast<T*>(const_cast<const vector<T, Capacity>*>(this)->data());
-    // AXIVION ENABLE STYLE AutosarC++19_03-A5.2.3
+    //  ENABLE STYLE AutosarC++19_03-A5.2.3
 }
 
 template <typename T, uint64_t Capacity>
@@ -261,8 +257,6 @@ inline const T* vector<T, Capacity>::data() const noexcept
 template <typename T, uint64_t Capacity>
 inline T& vector<T, Capacity>::at(const uint64_t index) noexcept
 {
-    // AXIVION Next Construct AutosarC++19_03-A5.2.3 : const cast to avoid code duplication
-    // NOLINTNEXTLINE(cppcoreguidelines-pro-type-const-cast)
     return const_cast<T&>(const_cast<const vector<T, Capacity>*>(this)->at(index));
 }
 
@@ -295,8 +289,6 @@ inline T& vector<T, Capacity>::front() noexcept
 template <typename T, uint64_t Capacity>
 inline const T& vector<T, Capacity>::front() const noexcept
 {
-    // AXIVION Next Construct AutosarC++19_03-A5.2.3 : const cast to avoid code duplication
-    // NOLINTNEXTLINE(cppcoreguidelines-pro-type-const-cast)
     return const_cast<vector<T, Capacity>*>(this)->front();
 }
 
@@ -310,40 +302,30 @@ inline T& vector<T, Capacity>::back() noexcept
 template <typename T, uint64_t Capacity>
 inline const T& vector<T, Capacity>::back() const noexcept
 {
-    // AXIVION Next Construct AutosarC++19_03-A5.2.3 : const cast to avoid code duplication
-    // NOLINTNEXTLINE(cppcoreguidelines-pro-type-const-cast)
     return const_cast<vector<T, Capacity>*>(this)->back();
 }
 
 template <typename T, uint64_t Capacity>
 inline typename vector<T, Capacity>::iterator vector<T, Capacity>::begin() noexcept
 {
-    // AXIVION Next Construct AutosarC++19_03-A5.2.3 : const cast to avoid code duplication
-    // NOLINTNEXTLINE(cppcoreguidelines-pro-type-const-cast)
     return const_cast<iterator>(const_cast<const vector<T, Capacity>*>(this)->begin());
 }
 
 template <typename T, uint64_t Capacity>
 inline typename vector<T, Capacity>::const_iterator vector<T, Capacity>::begin() const noexcept
 {
-    // AXIVION Next Construct AutosarC++19_03-A5.2.4 : Type-safety ensured by template parameter
-    // NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
     return reinterpret_cast<const_iterator>(&at_unchecked(0));
 }
 
 template <typename T, uint64_t Capacity>
 inline typename vector<T, Capacity>::iterator vector<T, Capacity>::end() noexcept
 {
-    // AXIVION Next Construct AutosarC++19_03-A5.2.3 : const cast to avoid code duplication
-    // NOLINTNEXTLINE(cppcoreguidelines-pro-type-const-cast)
     return const_cast<iterator>(const_cast<const vector<T, Capacity>*>(this)->end());
 }
 
 template <typename T, uint64_t Capacity>
 inline typename vector<T, Capacity>::const_iterator vector<T, Capacity>::end() const noexcept
 {
-    // AXIVION Next Construct AutosarC++19_03-A5.2.4, AutosarC++19_03-A5.0.4, AutosarC++19_03-M5.0.15 : Type-safety ensured by template parameter.
-    // NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
     return reinterpret_cast<const_iterator>(&(at_unchecked(0)) + m_size);
 }
 
@@ -352,12 +334,10 @@ inline bool vector<T, Capacity>::erase(iterator position) noexcept
 {
     if ((begin() <= position) && (position < end()))
     {
-        // AXIVION Next Line AutosarC++19_03-M5.0.9 : False positive. Pointer arithmetic occurs here.
         uint64_t index{static_cast<uint64_t>(position - begin())};
         uint64_t n{index};
         while ((n + 1U) < size())
         {
-            // AXIVION Next Line AutosarC++19_03-A5.0.1 : Expands to basic variable assignment. Evaluation order is inconsequential.
             at(n) = std::move(at(n + 1U));
             ++n;
         }
@@ -371,16 +351,12 @@ inline bool vector<T, Capacity>::erase(iterator position) noexcept
 template <typename T, uint64_t Capacity>
 inline T& vector<T, Capacity>::at_unchecked(const uint64_t index) noexcept
 {
-    // AXIVION Next Construct AutosarC++19_03-A5.2.3 : const cast to avoid code duplication
-    // NOLINTNEXTLINE(cppcoreguidelines-pro-type-const-cast)
     return const_cast<T&>(const_cast<const vector<T, Capacity>*>(this)->at_unchecked(index));
 }
 
 template <typename T, uint64_t Capacity>
 inline const T& vector<T, Capacity>::at_unchecked(const uint64_t index) const noexcept
 {
-    // AXIVION Next Construct AutosarC++19_03-A5.2.4 : Type-safety ensured by template parameter
-    // NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
     return *reinterpret_cast<const T*>(&m_data[index]);
 }
 
@@ -393,8 +369,6 @@ inline void vector<T, Capacity>::clearFrom(const uint64_t startPosition) noexcep
     }
 }
 
-// AXIVION Next Construct AutosarC++19_03-A13.5.5 : intentional implementation with different parameters to enable
-// comparison of vectors with different capacity
 template <typename T, uint64_t CapacityLeft, uint64_t CapacityRight>
 inline constexpr bool operator==(const vector<T, CapacityLeft>& lhs, const vector<T, CapacityRight>& rhs) noexcept
 {
@@ -414,8 +388,6 @@ inline constexpr bool operator==(const vector<T, CapacityLeft>& lhs, const vecto
     return true;
 } 
 
-// AXIVION Next Construct AutosarC++19_03-A13.5.5 : intentional implementation with different parameters to enable
-// comparison of vectors with different capacity
 template <typename T, uint64_t CapacityLeft, uint64_t CapacityRight>
 inline bool constexpr operator!=(const vector<T, CapacityLeft>& lhs, const vector<T, CapacityRight>& rhs) noexcept
 {

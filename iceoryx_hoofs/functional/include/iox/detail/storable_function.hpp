@@ -52,18 +52,10 @@ class storable_function<Capacity, signature<ReturnType, Args...>> final
               typename = typename std::enable_if<std::is_class<Functor>::value
                                                      && is_invocable_r<ReturnType, Functor, Args...>::value,
                                                  void>::type>
-    // AXIVION Next Construct AutosarC++19_03-A12.1.4: implicit conversion of functors is intentional,
-    // the storable function should implicitly behave like any generic constructor, adding
-    // explicit would require a static_cast. Furthermore, the storable_functor stores a copy
-    // which avoids implicit misbehaviors or ownership problems caused by implicit conversion.
-    /// @NOLINTNEXTLINE(hicpp-explicit-conversions)
+    
     storable_function(const Functor& functor) noexcept;
 
     /// @brief construct from function pointer (including static functions)
-    /// @NOLINTJUSTIFICATION the storable function should implicitly behave like any generic constructor, adding
-    ///                      explicit would require a static_cast. Furthermore, the storable_functor stores a copy
-    ///                      which avoids implicit misbehaviors or ownership problems caused by implicit conversion.
-    /// @NOLINTNEXTLINE(hicpp-explicit-conversions)
     storable_function(ReturnType (*function)(Args...)) noexcept;
 
     /// @brief construct from object reference and member function
@@ -151,8 +143,6 @@ class storable_function<Capacity, signature<ReturnType, Args...>> final
   private:
     operations m_operations; // operations depending on type-erased callable (copy, move, destroy)
 
-    // AXIVION Next Construct AutosarC++19_03-A18.1.1 : safe access is guaranteed since the c-array is wrapped inside the storable_function
-    // NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays, hicpp-avoid-c-arrays)
     byte m_storage[Capacity];                           // storage for the callable
     void* m_callable{nullptr};                          // pointer to stored type-erased callable
     ReturnType (*m_invoker)(void*, Args&&...){nullptr}; // indirection to invoke the stored callable,
@@ -186,9 +176,6 @@ class storable_function<Capacity, signature<ReturnType, Args...>> final
 
     static void moveFreeFunction(storable_function& src, storable_function& dest) noexcept;
 
-    // AXIVION Next Construct AutosarC++19_03-M7.1.2: callable cannot be const void* since
-    // m_invoker is initialized with this function and has to work with functors as well
-    // (functors may change due to invocation)
     static ReturnType invokeFreeFunction(void* callable, Args&&... args) noexcept;
 
     template <typename T>
