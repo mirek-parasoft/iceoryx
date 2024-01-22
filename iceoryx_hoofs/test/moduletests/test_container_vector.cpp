@@ -485,6 +485,7 @@ TEST_F(vector_test, EmplacingElementInTheMiddleCallsDTor)
 }
 */
 
+
 TEST_F(vector_test, CopyAssignmentWithEmptySource)
 {
     ::testing::Test::RecordProperty("TEST_ID", "3f64706d-b370-41b4-91e1-3e319cd6c14a");
@@ -1600,7 +1601,6 @@ TEST_F(vector_test, EmplaceWhenFullReturnsFalse)
 }
 
 
-/*
 //Step 3
 TEST_F(vector_test, EmplaceWhenPositionExceedsCapacityReturnsFalse)
 {
@@ -1608,8 +1608,6 @@ TEST_F(vector_test, EmplaceWhenPositionExceedsCapacityReturnsFalse)
     EXPECT_FALSE(sut.emplace(sut.capacity() + 10U, 5U));
     EXPECT_THAT(sut.size(), Eq(0));
 }
-
-*/
 
 /**/
 
