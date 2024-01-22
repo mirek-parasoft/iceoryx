@@ -123,7 +123,7 @@ jobs:
       run: NUMBER=NUMBER=$(cpptestcov query -coverage SC .coverage) && if [ $NUMBER -lt $LINE_COV_GATE ]; then echo "Statement coverage quality gate failed"; echo "Expected result $LINE_COV_GATE%, echieved $NUMBER%"; echo "Check html report https://mirek-parasoft.github.io/iceoryx/"; false; else echo "Line coverage quality gate passed with $NUMBER% (required $LINE_COV_GATE%)"; echo "check html report https://mirek-parasoft.github.io/iceoryx/ for details"; true; fi      
 
 
-    - name: Check MCDC New Coverage Gate
+    - name: Check MCDC Coverage Gate
       working-directory: ${{github.workspace}}/iceoryx_hoofs
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
