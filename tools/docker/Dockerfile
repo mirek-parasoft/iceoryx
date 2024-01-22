@@ -41,6 +41,9 @@ WORKDIR /iceoryx
 
 RUN ./tools/iceoryx_build_test.sh clean build-all
 
+WORKDIR /opt/parasoft
+COPY cpptest-coverage /opt/parasoft/cpptest-coverage
+
 # ======================================================================================================================== #
 
 FROM ubuntu:focal as roudi
