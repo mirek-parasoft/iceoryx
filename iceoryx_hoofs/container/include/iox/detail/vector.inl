@@ -166,7 +166,7 @@ inline bool vector<T, Capacity>::emplace_back(Targs&&... args) noexcept
     }
     return false;
 }
-
+ 
 template <typename T, uint64_t Capacity>
 template <typename... Targs>
 inline bool vector<T, Capacity>::emplace(const uint64_t position, Targs&&... args) noexcept
