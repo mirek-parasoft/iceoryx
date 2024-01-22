@@ -151,7 +151,7 @@ function (cpptest_enable_coverage)
     &&
     ${CPPTEST_HOME_DIR}/bin/cpptestcov report html-multipage
         -coverage=${CPPTEST_COVERAGE_TYPE_REPORT}
-        -code -out "${CPPTEST_SOURCE_DIR}/.coverage/cov_report"
+        -code -out "${CPPTEST_SOURCE_DIR}/.coverage/"
         "${CPPTEST_SOURCE_DIR}/.coverage"
     &&
     ${CPPTEST_HOME_DIR}/bin/cpptestcov report text
