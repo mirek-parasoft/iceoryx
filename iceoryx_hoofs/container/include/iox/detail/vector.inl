@@ -174,7 +174,7 @@ inline bool vector<T, Capacity>::emplace(const uint64_t position, Targs&&... arg
     {
         return false;
     }
-
+ 
     if (position == sizeBeforeEmplace)
     {
         return emplace_back(std::forward<Targs>(args)...);

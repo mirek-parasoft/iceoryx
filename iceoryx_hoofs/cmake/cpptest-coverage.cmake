@@ -21,7 +21,7 @@ function (cpptest_enable_coverage)
   else()
     set(CPPTEST_BINARY_DIR "${CMAKE_BINARY_DIR}")
     set(CPPTEST_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
-  endif()
+  endif() 
 
   # Configure C/C++test compiler identifier
   set(CPPTEST_COMPILER_ID "gcc_11-64")

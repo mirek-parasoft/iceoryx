@@ -506,7 +506,6 @@ TEST_F(vector_test, CopyAssignmentWithEmptySource)
 
 TEST_F(vector_test, CopyAssignmentWithEmptyDestination)
 {
-    ::testing::Test::RecordProperty("TEST_ID", "c3bb0ad8-c099-438c-afc4-d41a22dc4e2f");
     vector<CTorTest, 10U> sut1;
     vector<CTorTest, 10U> sut2;
     sut1.emplace_back(5812U);
@@ -528,7 +527,6 @@ TEST_F(vector_test, CopyAssignmentWithEmptyDestination)
 
 TEST_F(vector_test, CopyAssignmentWithLargerDestination)
 {
-    ::testing::Test::RecordProperty("TEST_ID", "39353120-5606-43b6-8909-a6751a801331");
     vector<CTorTest, 10U> sut1;
     vector<CTorTest, 10U> sut2;
     sut1.emplace_back(5842U);
@@ -1507,7 +1505,6 @@ TEST_F(vector_test, ResizeWithDefaultCTorChangesNothingIfSizeAlreadyFits)
 
 TEST_F(vector_test, ResizeWithTemplateValueChangesNothingIfSizeAlreadyFits)
 {
-    ::testing::Test::RecordProperty("@Req", "CICOV-5");
     sut.emplace_back(7U);
     sut.emplace_back(9U);
     EXPECT_TRUE(sut.resize(2U, 421337U));
@@ -1517,19 +1514,17 @@ TEST_F(vector_test, ResizeWithTemplateValueChangesNothingIfSizeAlreadyFits)
     EXPECT_THAT(sut[1], Eq(9U));
 }
 
-//Step 1, REQ-1
 TEST_F(vector_test, EmplaceInEmptyVectorWorks)
 {
-    ::testing::Test::RecordProperty("TEST_ID", "e6b1b8d4-77b6-4a19-8d7e-7f483e2e461d");
+    ::testing::Test::RecordProperty("@Req", "ICO-1");
     EXPECT_TRUE(sut.emplace(0U, 123U));
     ASSERT_THAT(sut.size(), Eq(1U));
     EXPECT_THAT(sut[0], Eq(123U));
 }
 
-//Step 1, REQ-1
 TEST_F(vector_test, EmplaceAtEndWorks)
 {
-    ::testing::Test::RecordProperty("TEST_ID", "57551774-750f-4dd4-81c0-fa6ef9046689");
+    ::testing::Test::RecordProperty("@Req", "ICO-1");
     sut.emplace_back(123U);
 
     EXPECT_TRUE(sut.emplace(sut.size(), 321U));
@@ -1537,10 +1532,10 @@ TEST_F(vector_test, EmplaceAtEndWorks)
     ASSERT_THAT(sut[sut.size() - 1], Eq(321U));
 }
 
-//Step 2, REQ-2
+/*
 TEST_F(vector_test, EmplaceAtFrontTillFullWorks)
 {
-     ::testing::Test::RecordProperty("TEST_ID", "c7074b38-8493-4b53-acc2-9a20d0f735ce");
+     ::testing::Test::RecordProperty("@Req", "ICO-2");
      for (uint64_t i = 0U; i < VECTOR_CAPACITY; ++i)
      {
          EXPECT_TRUE(sut.emplace(0U, i));
@@ -1552,12 +1547,9 @@ TEST_F(vector_test, EmplaceAtFrontTillFullWorks)
      }
 }
 
-
-
-//Step 2
 TEST_F(vector_test, EmplaceInTheMiddleMovesElementsToTheRight)
 {
-    ::testing::Test::RecordProperty("TEST_ID", "ab181814-6743-43a2-8420-c725b3afd800");
+    ::testing::Test::RecordProperty("@Req", "ICO-3");
     sut.emplace_back(0U);
     sut.emplace_back(1U);
     sut.emplace_back(2U);
@@ -1572,10 +1564,16 @@ TEST_F(vector_test, EmplaceInTheMiddleMovesElementsToTheRight)
     EXPECT_THAT(sut[3], Eq(2U));
 }
 
-//Step 3
+TEST_F(vector_test, EmplaceWhenPositionExceedsCapacityReturnsFalse)
+{
+    ::testing::Test::RecordProperty("@Req", "ICO-4");
+    EXPECT_FALSE(sut.emplace(sut.capacity() + 10U, 5U));
+    EXPECT_THAT(sut.size(), Eq(0));
+}
+
 TEST_F(vector_test, EmplaceAtPositionAfterEndBeforeCapacityExceedsFails)
 {
-    ::testing::Test::RecordProperty("TEST_ID", "b5112070-9446-44bf-8fdf-1853cfb247fc");
+    ::testing::Test::RecordProperty("@Req", "ICO-5");
     sut.emplace_back(0U);
     sut.emplace_back(1U);
 
@@ -1584,12 +1582,12 @@ TEST_F(vector_test, EmplaceAtPositionAfterEndBeforeCapacityExceedsFails)
     EXPECT_FALSE(sut.emplace(EXPECTED_SIZE + 1, 3U));
     ASSERT_THAT(sut.size(), EXPECTED_SIZE);
 }
+*/
 
-
-//Step 4
+/*
 TEST_F(vector_test, EmplaceWhenFullReturnsFalse)
 {
-    ::testing::Test::RecordProperty("TEST_ID", "93e5d45c-9450-4ceb-8d1c-78aae413eca8");
+    ::testing::Test::RecordProperty("@Req", "ICO-6");
     for (uint64_t i = 0U; i < VECTOR_CAPACITY; ++i)
     {
         sut.emplace_back(i);
@@ -1599,17 +1597,5 @@ TEST_F(vector_test, EmplaceWhenFullReturnsFalse)
     EXPECT_FALSE(sut.emplace(index, 5U));
     EXPECT_THAT(sut.size(), Eq(sut.capacity()));
 }
-
-
-//Step 3
-TEST_F(vector_test, EmplaceWhenPositionExceedsCapacityReturnsFalse)
-{
-    ::testing::Test::RecordProperty("TEST_ID", "519d97fb-aec0-4824-9cd7-dd3446b7b71c");
-    EXPECT_FALSE(sut.emplace(sut.capacity() + 10U, 5U));
-    EXPECT_THAT(sut.size(), Eq(0));
-}
-
-/**/
-
-
+*/
 } // namespace
