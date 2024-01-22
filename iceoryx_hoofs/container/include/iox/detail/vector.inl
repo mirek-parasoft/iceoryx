@@ -20,7 +20,7 @@
 #include "iox/vector.hpp"
 
 #include <iostream>
- 
+  
 namespace iox
 {
 template <typename T, uint64_t Capacity>

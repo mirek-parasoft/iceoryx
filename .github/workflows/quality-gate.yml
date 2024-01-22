@@ -1,9 +1,12 @@
-name: Unit testing with coverage
+name: Unit testing with coverage (feature branch)
 
 on:
   pull_request:
-    branches: [ master ]
-name: Unit testing with coverage (master)
+    types:
+      - opened
+    branches:
+      - master
+
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
