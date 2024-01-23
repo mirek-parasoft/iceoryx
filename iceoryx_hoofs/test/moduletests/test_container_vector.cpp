@@ -1535,7 +1535,6 @@ TEST_F(vector_test, EmplaceAtEndWorks)
 
 TEST_F(vector_test, EmplaceAtFrontTillFullWorks)
 {
-         ::testing::Test::RecordProperty("@req", "ICO-2");
      for (uint64_t i = 0U; i < VECTOR_CAPACITY; ++i)
      {
          EXPECT_TRUE(sut.emplace(0U, i));
@@ -1549,7 +1548,6 @@ TEST_F(vector_test, EmplaceAtFrontTillFullWorks)
 
 TEST_F(vector_test, EmplaceInTheMiddleMovesElementsToTheRight)
 {
-    ::testing::Test::RecordProperty("@req", "ICO-3");
     sut.emplace_back(0U);
     sut.emplace_back(1U);
     sut.emplace_back(2U);
@@ -1564,30 +1562,9 @@ TEST_F(vector_test, EmplaceInTheMiddleMovesElementsToTheRight)
     EXPECT_THAT(sut[3], Eq(2U));
 }
 
-TEST_F(vector_test, EmplaceWhenPositionExceedsCapacityReturnsFalse)
-{
-    ::testing::Test::RecordProperty("@req", "ICO-4");
-    EXPECT_FALSE(sut.emplace(sut.capacity() + 10U, 5U));
-    EXPECT_THAT(sut.size(), Eq(0));
-}
 
-TEST_F(vector_test, EmplaceAtPositionAfterEndBeforeCapacityExceedsFails)
-{
-    ::testing::Test::RecordProperty("@req", "ICO-5");
-    sut.emplace_back(0U);
-    sut.emplace_back(1U);
-
-    constexpr uint64_t EXPECTED_SIZE{2};
-    ASSERT_THAT(sut.size(), EXPECTED_SIZE);
-    EXPECT_FALSE(sut.emplace(EXPECTED_SIZE + 1, 3U));
-    ASSERT_THAT(sut.size(), EXPECTED_SIZE);
-}
-
-
-/*
 TEST_F(vector_test, EmplaceWhenFullReturnsFalse)
 {
-    ::testing::Test::RecordProperty("@req", "ICO-6");
     for (uint64_t i = 0U; i < VECTOR_CAPACITY; ++i)
     {
         sut.emplace_back(i);
@@ -1597,5 +1574,26 @@ TEST_F(vector_test, EmplaceWhenFullReturnsFalse)
     EXPECT_FALSE(sut.emplace(index, 5U));
     EXPECT_THAT(sut.size(), Eq(sut.capacity()));
 }
+
+
+TEST_F(vector_test, EmplaceAtPositionAfterEndBeforeCapacityExceedsFails)
+{
+    sut.emplace_back(0U);
+    sut.emplace_back(1U);
+
+    constexpr uint64_t EXPECTED_SIZE{2};
+    ASSERT_THAT(sut.size(), EXPECTED_SIZE);
+    EXPECT_FALSE(sut.emplace(EXPECTED_SIZE + 1, 3U));
+    ASSERT_THAT(sut.size(), EXPECTED_SIZE);
+}
+
+/*
+TEST_F(vector_test, EmplaceWhenPositionExceedsCapacityReturnsFalse)
+{
+    ::testing::Test::RecordProperty("@req", "ICO-6");
+    EXPECT_FALSE(sut.emplace(sut.capacity() + 10U, 5U));
+    EXPECT_THAT(sut.size(), Eq(0));
+}
 */
+
 } // namespace
