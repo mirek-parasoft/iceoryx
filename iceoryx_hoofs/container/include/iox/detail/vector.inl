@@ -75,7 +75,6 @@ inline vector<T, Capacity>::~vector() noexcept
 template <typename T, uint64_t Capacity>
 inline vector<T, Capacity>& vector<T, Capacity>::operator=(const vector& rhs) noexcept
 {
-
         uint64_t i{0U};
         const uint64_t rhsSize{rhs.size()};
         const uint64_t minSize{algorithm::minVal(m_size, rhsSize)};
@@ -96,14 +95,13 @@ inline vector<T, Capacity>& vector<T, Capacity>::operator=(const vector& rhs) no
         clearFrom(i);
 
         m_size = rhsSize;
-    
     return *this;
 }
 
 template <typename T, uint64_t Capacity>
 inline vector<T, Capacity>& vector<T, Capacity>::operator=(vector&& rhs) noexcept
 {
-
+    if (this != &rhs) {
         uint64_t i{0U};
         const uint64_t rhsSize{rhs.size()};
         const uint64_t minSize{algorithm::minVal(m_size, rhsSize)};
@@ -125,6 +123,7 @@ inline vector<T, Capacity>& vector<T, Capacity>::operator=(vector&& rhs) noexcep
 
         m_size = rhsSize;
         rhs.clear();
+    }
     return *this;
 }
 
@@ -366,12 +365,12 @@ inline void vector<T, Capacity>::clearFrom(const uint64_t startPosition) noexcep
 template <typename T, uint64_t CapacityLeft, uint64_t CapacityRight>
 inline constexpr bool operator==(const vector<T, CapacityLeft>& lhs, const vector<T, CapacityRight>& rhs) noexcept
 {
+   
     uint64_t vectorSize{lhs.size()};
     if (vectorSize != rhs.size())
     {
         return false;
     }
-
     for (uint64_t i{0U}; i < vectorSize; ++i)
     {
         if (lhs[i] != rhs[i])

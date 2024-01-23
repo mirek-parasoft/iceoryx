@@ -220,7 +220,7 @@ TEST_F(vector_test, EmplaceBackFailsWhenSpaceNotAvailable)
 TEST_F(vector_test, PushBackSuccessfulWhenSpaceAvailableLValue)
 {
     ::testing::Test::RecordProperty("TEST_ID", "42102325-91fa-45aa-a5cb-2bce785d11c1");
-    const int a{5};
+    const uint64_t a{5};
     EXPECT_THAT(sut.push_back(a), Eq(true));
     ASSERT_THAT(sut.size(), Eq(1U));
     EXPECT_THAT(sut.at(0), Eq(a));
