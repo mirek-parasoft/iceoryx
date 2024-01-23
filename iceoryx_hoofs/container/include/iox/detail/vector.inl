@@ -167,7 +167,7 @@ inline bool vector<T, Capacity>::emplace_back(Targs&&... args) noexcept
 template <typename T, uint64_t Capacity>
 template <typename... Targs>
 inline bool vector<T, Capacity>::emplace(const uint64_t position, Targs&&... args) noexcept
-{
+{ 
     const uint64_t sizeBeforeEmplace{m_size};
 
     if ((position >= Capacity) || (position > sizeBeforeEmplace) || (m_size >= Capacity))
