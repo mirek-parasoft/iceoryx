@@ -1532,10 +1532,10 @@ TEST_F(vector_test, EmplaceAtEndWorks)
     ASSERT_THAT(sut[sut.size() - 1], Eq(321U));
 }
 
-/*
+
 TEST_F(vector_test, EmplaceAtFrontTillFullWorks)
 {
-     ::testing::Test::RecordProperty("@Req", "ICO-2");
+    ::testing::Test::RecordProperty("@Req", "ICO-2");
      for (uint64_t i = 0U; i < VECTOR_CAPACITY; ++i)
      {
          EXPECT_TRUE(sut.emplace(0U, i));
@@ -1582,7 +1582,6 @@ TEST_F(vector_test, EmplaceAtPositionAfterEndBeforeCapacityExceedsFails)
     EXPECT_FALSE(sut.emplace(EXPECTED_SIZE + 1, 3U));
     ASSERT_THAT(sut.size(), EXPECTED_SIZE);
 }
-*/
 
 /*
 TEST_F(vector_test, EmplaceWhenFullReturnsFalse)
