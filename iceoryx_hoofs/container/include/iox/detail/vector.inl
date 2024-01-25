@@ -172,7 +172,7 @@ inline bool vector<T, Capacity>::emplace(const uint64_t position, Targs&&... arg
     if ((position >= Capacity) || (position > sizeBeforeEmplace) || (m_size >= Capacity))
     {
         return false;
-    }
+    } 
   
     if (position == sizeBeforeEmplace)
     {
