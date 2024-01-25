@@ -133,6 +133,6 @@ jobs:
       working-directory: ${{github.workspace}}/iceoryx_hoofs
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
-      run: NUMBER=$(cpptestcov query -coverage MCDC .coverage) && if [[ $NUMBER -le $MCDC_COV_GATE ]]; then echo "MCDC coverage quality gate failed"; echo "Expected result $MCDC_COV_GATE%, echieved $NUMBER%"; echo "Check html report https://mirek-parasoft.github.io/iceoryx/"; false; else echo "MCDC coverage quality gate passed with $NUMBER% (required $MCDC_COV_GATE%)"; echo "check html report https://mirek-parasoft.github.io/iceoryx/ for details"; true; fi      
+      run: NUMBER=$(cpptestcov query -coverage MCDC .coverage) && if [[ $NUMBER -lt $MCDC_COV_GATE ]]; then echo "MCDC coverage quality gate failed"; echo "Expected result $MCDC_COV_GATE%, echieved $NUMBER%"; echo "Check html report https://mirek-parasoft.github.io/iceoryx/"; false; else echo "MCDC coverage quality gate passed with $NUMBER% (required $MCDC_COV_GATE%)"; echo "check html report https://mirek-parasoft.github.io/iceoryx/ for details"; true; fi      
 
    

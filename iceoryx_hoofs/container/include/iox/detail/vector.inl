@@ -172,8 +172,8 @@ inline bool vector<T, Capacity>::emplace(const uint64_t position, Targs&&... arg
     if ((position >= Capacity) || (position > sizeBeforeEmplace) || (m_size >= Capacity))
     {
         return false;
-    }
- 
+    } 
+  
     if (position == sizeBeforeEmplace)
     {
         return emplace_back(std::forward<Targs>(args)...);
@@ -187,7 +187,7 @@ inline bool vector<T, Capacity>::emplace(const uint64_t position, Targs&&... arg
     at(position).~T();
     new (&at(position)) T(std::forward<Targs>(args)...);
     return true;
-}    
+}     
  
 template <typename T, uint64_t Capacity>
 inline bool vector<T, Capacity>::push_back(const T& value) noexcept
