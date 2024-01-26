@@ -39,19 +39,7 @@ jobs:
       working-directory: ${{github.workspace}}
       run: echo "The new build id is ${{ env.build_id }}"
 
-    - name: Get changed files
-      id: changed-files
-      uses: tj-actions/changed-files@v41
-      # To compare changes between the current commit and the last pushed remote commit set `since_last_remote_commit: true`. e.g
-      with:
-        files: |
-          **.inl
-          **.cpp
-        files_ignore: |
-          **/test_*.cpp
-
-    - name: Prepare excludes
-      if: steps.changed-files.outputs.any_changed == 'true'
+    - name: Prepare excludes - empty for master
       env:
         ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
         CPPTEST_CC_PSRC: iceoryx_hoofs/cmake/.cpptestcc
