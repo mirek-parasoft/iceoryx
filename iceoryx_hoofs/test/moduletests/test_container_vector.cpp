@@ -1516,7 +1516,7 @@ TEST_F(vector_test, ResizeWithTemplateValueChangesNothingIfSizeAlreadyFits)
 
 TEST_F(vector_test, EmplaceInEmptyVectorWorks)
 {
-    ::testing::Test::RecordProperty("@req", "ICO-1");
+    ::testing::Test::RecordProperty("req", "ICO-1");
     EXPECT_TRUE(sut.emplace(0U, 123U));
     ASSERT_THAT(sut.size(), Eq(1U));
     EXPECT_THAT(sut[0], Eq(123U));
@@ -1524,7 +1524,7 @@ TEST_F(vector_test, EmplaceInEmptyVectorWorks)
 
 TEST_F(vector_test, EmplaceAtEndWorks)
 {
-    ::testing::Test::RecordProperty("@req", "ICO-1");
+    ::testing::Test::RecordProperty("req", "ICO-1");
     sut.emplace_back(123U);
 
     EXPECT_TRUE(sut.emplace(sut.size(), 321U));
@@ -1534,7 +1534,7 @@ TEST_F(vector_test, EmplaceAtEndWorks)
 
 TEST_F(vector_test, EmplaceAtFrontTillFullWorks)
 {
-    ::testing::Test::RecordProperty("@req", "ICO-2");
+    ::testing::Test::RecordProperty("req", "ICO-2");
      for (uint64_t i = 0U; i < VECTOR_CAPACITY; ++i)
      {
          EXPECT_TRUE(sut.emplace(0U, i));
@@ -1548,7 +1548,7 @@ TEST_F(vector_test, EmplaceAtFrontTillFullWorks)
 
 TEST_F(vector_test, EmplaceInTheMiddleMovesElementsToTheRight)
 {
-    ::testing::Test::RecordProperty("@req", "ICO-3");
+    ::testing::Test::RecordProperty("req", "ICO-3");
     sut.emplace_back(0U);
     sut.emplace_back(1U);
     sut.emplace_back(2U);
@@ -1566,7 +1566,7 @@ TEST_F(vector_test, EmplaceInTheMiddleMovesElementsToTheRight)
 
 TEST_F(vector_test, EmplaceWhenFullReturnsFalse)
 {
-    ::testing::Test::RecordProperty("@req", "ICO-4");
+    ::testing::Test::RecordProperty("req", "ICO-4");
     for (uint64_t i = 0U; i < VECTOR_CAPACITY; ++i)
     {
         sut.emplace_back(i);
@@ -1580,7 +1580,7 @@ TEST_F(vector_test, EmplaceWhenFullReturnsFalse)
 
 TEST_F(vector_test, EmplaceAtPositionAfterEndBeforeCapacityExceedsFails)
 {
-    ::testing::Test::RecordProperty("@req", "ICO-5");
+    ::testing::Test::RecordProperty("req", "ICO-5");
     sut.emplace_back(0U);
     sut.emplace_back(1U);
 
@@ -1593,7 +1593,7 @@ TEST_F(vector_test, EmplaceAtPositionAfterEndBeforeCapacityExceedsFails)
 
 TEST_F(vector_test, EmplaceWhenPositionExceedsCapacityReturnsFalse)
 {
-    ::testing::Test::RecordProperty("@req", "ICO-7");
+    ::testing::Test::RecordProperty("req", "ICO-7");
     EXPECT_FALSE(sut.emplace(sut.capacity() + 10U, 5U));
     EXPECT_THAT(sut.size(), Eq(0));
 }
