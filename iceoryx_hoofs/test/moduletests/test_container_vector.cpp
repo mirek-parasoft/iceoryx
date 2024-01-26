@@ -1165,7 +1165,7 @@ TEST_F(vector_test, ConstBackPointsToLastElement)
     // NOLINTNEXTLINE(cppcoreguidelines-pro-type-const-cast)
     EXPECT_THAT(const_cast<const decltype(sut)*>(&sut)->back(), Eq(12U));
 }
-
+ 
 TEST_F(vector_test, ConstructorWithSizeParameterSmallerThanCapacity)
 {
     ::testing::Test::RecordProperty("TEST_ID", "b55f3818-ded5-420a-ad9a-88d5e90b429e");
