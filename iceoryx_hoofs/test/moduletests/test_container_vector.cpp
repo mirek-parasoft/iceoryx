@@ -1592,12 +1592,12 @@ TEST_F(vector_test, EmplaceAtPositionAfterEndBeforeCapacityExceedsFails)
 }
 
 
-/*
+
 TEST_F(vector_test, EmplaceWhenPositionExceedsCapacityReturnsFalse)
 {
     ::testing::Test::RecordProperty("req", "ICO-7");
     EXPECT_FALSE(sut.emplace(sut.capacity() + 10U, 5U));
     EXPECT_THAT(sut.size(), Eq(0));
 }
-*/
+
 } // namespace
