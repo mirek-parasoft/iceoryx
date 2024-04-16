@@ -36,7 +36,7 @@ endif()
 
 set(PREFIX iceoryx/v${CMAKE_PROJECT_VERSION})
 
-# include cpptest-coverage extension
+# include cpptestct coverage extension
 if(CPPTEST_COVERAGE)
     include("${CMAKE_CURRENT_LIST_DIR}/cmake/cpptest-coverage.cmake")
 endif()
