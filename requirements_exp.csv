@@ -1,0 +1,9 @@
+id,name
+ICO-8,The assignment operator shall be optimized for self-assignments 
+ICO-7,If stack capacity is exceeded the push method shall fail.
+ICO-6,Emplacing element at a position greater than capacity shall fail
+ICO-5,Emplacing element at a position greater than the current size shall fail
+ICO-4,Emplacing element at the position exceeding capacity should fail
+ICO-3,Emplacing an element at a position in the middle of existing elements shall move all elements from the position to the right
+ICO-2,It shall be possible to emplace the number of elements equal to the vector capacity
+ICO-1,It shall be possible to emplace a single element to an empty vector with capacity greater than zero
