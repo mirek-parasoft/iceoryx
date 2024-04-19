@@ -1502,8 +1502,8 @@ TEST_F(vector_test, ResizeWithDefaultCTorChangesNothingIfSizeAlreadyFits)
 
     ASSERT_THAT(sut.size(), Eq(2U));
     EXPECT_THAT(sut[0], Eq(5U));
-    //EXPECT_THAT(sut[1], Eq(6U));
-    EXPECT_THAT(sut[1], Eq(4U));
+    EXPECT_THAT(sut[1], Eq(6U));
+    //EXPECT_THAT(sut[1], Eq(4U));
 }
 
 TEST_F(vector_test, ResizeWithTemplateValueChangesNothingIfSizeAlreadyFits)
