@@ -87,3 +87,5 @@ buildifier(
     mode = "check",
     verbose = True,
 )
+
+filegroup(name = "cpptestcc-bazel-psrc", srcs = ["cpptestcc-bazel.psrc"], visibility = ["//visibility:public"])
