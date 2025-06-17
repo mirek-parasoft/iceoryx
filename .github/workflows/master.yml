@@ -42,3 +42,8 @@ jobs:
       working-directory: ${{github.workspace}}
       run: echo "The new build id is ${{ env.build_id }}"
   
+   - name: Build 
+      working-directory: ${{github.workspace}}
+      shell: bash
+      # Execute the build.  You can specify a specific target with "--target <NAME>"
+      run: bazel run @cpptest//:coverage --@cpptest//:target=//iceoryx_hoofs/test:hoofs_moduletests_vector  --@cpptest//:psrc_file=//:cpptestcc-bazel-psrc
