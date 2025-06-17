@@ -47,3 +47,51 @@ jobs:
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: bazel run @cpptest//:coverage --@cpptest//:target=//iceoryx_hoofs/test:hoofs_moduletests_vector  --@cpptest//:psrc_file=//:cpptestcc-bazel-psrc
+
+    - name: Coverage Logs Cleanup
+      working-directory: ${{github.workspace}}/build
+      shell: bash
+      # Execute the build.  You can specify a specific target with "--target <NAME>"
+      run: rm -rf cpptest_results.clog
+
+    - name: Run Unit Tests
+      working-directory: ${{github.workspace}}
+      shell: bash
+      # Execute the build.  You can specify a specific target with "--target <NAME>"
+      run: bazel-out/k8-fastbuild/bin/iceoryx_hoofs/test/hoofs_moduletests_vector.elf
+
+    - name: Compute results
+      working-directory: ${{github.workspace}}/build
+      shell: bash
+      # Execute the build.  You can specify a specific target with "--target <NAME>"
+      run: cpptestcov compute -map .cpptest -clog cpptest_results.clog -out .coverage
+
+    - name: Generate reports
+      working-directory: ${{github.workspace}}/build
+      shell: bash
+      # Execute the build.  You can specify a specific target with "--target <NAME>"
+      run: cpptestcov report html -code -coverage LC,MCDC -out report/coverage.html .coverage
+
+    - name: Rename Coverage Report
+      working-directory: ${{github.workspace}}
+      shell: bash
+      # Execute the build.  You can specify a specific target with "--target <NAME>"
+      run: ls -la
+    - name: Setup Pages
+      uses: actions/configure-pages@v3
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v2
+      with:
+        # Upload entire repository
+        path: ${{github.workspace}}/.coverage/report_html
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v2
+
+    - name: Archive coverage
+      if: always()
+      uses: actions/upload-artifact@v2
+      with:
+        name: CpptestCoverage
+        path: ${{github.workspace}}/.coverage/
+
