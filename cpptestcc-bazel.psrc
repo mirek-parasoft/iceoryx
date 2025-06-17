@@ -30,6 +30,7 @@ cpptestcc.callCoverage true
 
 cpptestcc.exclude "regex:*"
 cpptestcc.include "regex:*/iceoryx_hoofs/*"
+cpptestcc.exclude "regex:*/.cache/bazel/_bazel_mirek/*"
 cpptestcc.ignore "regex:*/bazel-*/*"
 
 # === ADVANCED OPTIONS ===
