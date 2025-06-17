@@ -1,4 +1,4 @@
-name: Build
+name: Build and run
 
 on:
   # Triggers the workflow on push or pull request events but only for the master (main) branch.
@@ -42,7 +42,7 @@ jobs:
       working-directory: ${{github.workspace}}
       run: echo "The new build id is ${{ env.build_id }}"
   
-   - name: Build 
+    - name: Build project 
       working-directory: ${{github.workspace}}
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
