@@ -32,11 +32,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Create Build Environment
-      # Some projects don't allow in-source building, so create a separate build directory
-      # We'll use this as our working directory for all subsequent commands
-      run: cmake -E make_directory ${{github.workspace}}/build
-
     - name: Set build id
       shell: bash
       working-directory: ${{github.workspace}}
@@ -47,73 +42,3 @@ jobs:
       working-directory: ${{github.workspace}}
       run: echo "The new build id is ${{ env.build_id }}"
   
-    - name: Build 
-      working-directory: ${{github.workspace}}
-      shell: bash
-      # Execute the build.  You can specify a specific target with "--target <NAME>"
-      run: bazel run @cpptest//:coverage --@cpptest//:target=//iceoryx_hoofs/test:hoofs_moduletests_vector  --@cpptest//:psrc_file=//:cpptestcc-bazel-psrc
-
-    - name: Coverage Logs Cleanup
-      working-directory: ${{github.workspace}}/build
-      shell: bash
-      # Execute the build.  You can specify a specific target with "--target <NAME>"
-      run: rm -rf cpptest_results.clog
-
-    - name: Run Unit Tests
-      working-directory: ${{github.workspace}}
-      shell: bash
-      # Execute the build.  You can specify a specific target with "--target <NAME>"
-      run: bazel-out/k8-fastbuild/bin/iceoryx_hoofs/test/hoofs_moduletests_vector.elf
-
-    - name: Generate Coverage Reports
-      working-directory: ${{github.workspace}}/build
-      shell: bash
-      # Execute the build.  You can specify a specific target with "--target <NAME>"
-      run: cpptestcov compute -map .cpptest -clog cpptest_results.clog -out .coverage
-
-    - name: Rename Coverage Report
-      working-directory: ${{github.workspace}}
-      shell: bash
-      # Execute the build.  You can specify a specific target with "--target <NAME>"
-      run: ls -la
-    - name: Setup Pages
-      uses: actions/configure-pages@v3
-    - name: Upload artifact
-      uses: actions/upload-pages-artifact@v2
-      with:
-        # Upload entire repository
-        path: ${{github.workspace}}/.coverage/report_html
-    - name: Deploy to GitHub Pages
-      id: deployment
-      uses: actions/deploy-pages@v2
-
-    - name: Archive coverage
-      if: always()
-      uses: actions/upload-artifact@v2
-      with:
-        name: CpptestCoverage
-        path: ${{github.workspace}}/.coverage/
-
-    - name: Generate DTP reports
-      working-directory: ${{github.workspace}}
-      shell: bash
-      # Execute the build.  You can specify a specific target with "--target <NAME>"
-      run: cpptestcov report dtp-details -scm -project webinar-cicov -build ${{ env.build_id }} .coverage > .coverage/dtp-details.xml && cpptestcov report dtp-summary -project webinar-cicov -build ${{ env.build_id }} .coverage > .coverage/dtp-summary.xml && cpptestcov report dtp-gtest -scm -project webinar-cicov -build ${{ env.build_id }} cpputest_sensorUtil.xml > .coverage/dtp-gtest.xml
-
-    - name: Publish to DTP
-      working-directory: ${{github.workspace}}
-      shell: bash
-      # Execute the build.  You can specify a specific target with "--target <NAME>"
-      run: cpptestcov publish  -settings dtp.settings .coverage/dtp-details.xml .coverage/dtp-summary.xml .coverage/dtp-gtest.xml
-
-    - name: Check Line Coverage Gate
-      working-directory: ${{github.workspace}}
-      shell: bash
-      # Execute the build.  You can specify a specific target with "--target <NAME>"
-      run: NUMBER=$(cat .coverage/coverage.txt | grep "TOTAL" | sed -n 's/.*LC=\([0-9]*\)%.*/\1/p') && if [ $NUMBER -lt $LINE_COV_GATE ]; then echo "Line coverage quality gate failed"; echo "Expected result $LINE_COV_GATE%, echieved $NUMBER%"; echo "Check html report https://mirek-parasoft.github.io/webinar-cicov/"; false; else echo "Line coverage quality gate passed with $NUMBER% (required $LINE_COV_GATE%)"; echo "check html report https://mirek-parasoft.github.io/webinar-cicov/ for details"; true; fi
-      
-    - name: Check MCDC Coverage Gate 
-      working-directory: ${{github.workspace}}
-      shell: bash
-      # Execute the build.  You can specify a specific target with "--target <NAME>"
-      run: NUMBER=$(cat .coverage/coverage.txt | grep "TOTAL" | sed -n 's/.*MCDC=\([0-9]*\)%.*/\1/p') && if [ $NUMBER -lt $MCDC_COV_GATE ]; then echo "Line coverage quality gate failed"; echo "Expected result $MCDC_COV_GATE%, echieved $NUMBER%"; echo "Check html report https://mirek-parasoft.github.io/webinar-cicov/"; false; else echo "Line coverage quality gate passed with $NUMBER% (required $MCDC_COV_GATE%)"; echo "check html report https://mirek-parasoft.github.io/webinar-cicov/ for details" true; fi
