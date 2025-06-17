@@ -52,7 +52,7 @@ jobs:
       working-directory: ${{github.workspace}}/build
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
-      run: rm -rf cpptest_results.clog
+      run: rm -f cpptest_results.clog
 
     - name: Run Unit Tests
       working-directory: ${{github.workspace}}
