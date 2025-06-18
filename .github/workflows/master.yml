@@ -88,10 +88,6 @@ jobs:
       id: deployment
       uses: actions/deploy-pages@v4
 
-    - name: List .coverage contents
-      run: |
-      ls -la .coverage || echo ".coverage directory not found"
-
     - name: Archive Reports
       if: always()
       uses: actions/upload-artifact@v4
