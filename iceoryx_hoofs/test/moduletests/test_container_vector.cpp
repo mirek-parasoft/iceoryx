@@ -1514,5 +1514,5 @@ TEST_F(vector_test, EmplaceAtPositionAfterEndBeforeCapacityExceedsFails)
     EXPECT_FALSE(sut.emplace(EXPECTED_SIZE + 1, 3U));
     ASSERT_THAT(sut.size(), EXPECTED_SIZE);
 }
-
+  
 } // namespace
