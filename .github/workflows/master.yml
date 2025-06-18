@@ -94,4 +94,10 @@ jobs:
       with:
         name: coverage-report
         path: |
-          ${{github.workspace}}/.coverage
+          ${{github.workspace}}/.coverage/*
+
+    - name: Report to DTP
+      working-directory: ${{github.workspace}}
+      shell: bash
+      run: cpptestcov report dtp -verbose -coverage LC,MCDC -settings dtp.settings test_detail.xml .coverage
+
