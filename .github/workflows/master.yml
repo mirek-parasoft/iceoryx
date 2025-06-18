@@ -93,8 +93,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: coverage-report
-        path: |
-          ${{github.workspace}}/.coverage/*
+        path: ${{github.workspace}}/.coverage/
 
     - name: Report to DTP
       working-directory: ${{github.workspace}}
