@@ -92,7 +92,7 @@ jobs:
       if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: coverage-report
+        name: CpptestReports
         path: .coverage/
 
     - name: Report to DTP
