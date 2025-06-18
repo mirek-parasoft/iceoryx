@@ -101,3 +101,7 @@ jobs:
       shell: bash
       run: cpptestcov report dtp -verbose -coverage LC,MCDC -settings dtp.settings test_detail.xml .coverage
 
+    - name: Check Line Quality Gate
+      working-directory: ${{github.workspace}}
+      shell: bash
+      run: COV_VALUE=$(cpptestcov query -coverage LC .coverage) && if [[ $COV_VALUE -lt $LINE_COV_GATE ]]; then echo "Line coverage quality gate failed"; echo "Expected $LINE_COV_GATE% achieved $COV_VALUE%"; echo "Check details here: https://mirek-parasoft.github.io/iceoryx/coverage.html"; false; else echo "Line coverage quality gate passed"; echo "Achived $COV_VALUE% is above the gate of $LINE_COV_GATE"; true; fi
