@@ -58,7 +58,7 @@ jobs:
       working-directory: ${{github.workspace}}
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
-      run: bazel-out/k8-fastbuild/bin/iceoryx_hoofs/test/hoofs_moduletests.elf --gtest_output=xml
+      run: bazel-out/k8-fastbuild/bin/iceoryx_hoofs/test/hoofs_moduletests_vector.elf --gtest_output=xml
 
     - name: Compute results
       working-directory: ${{github.workspace}}
