@@ -104,6 +104,6 @@ jobs:
     - name: Check Line Quality Gate
       working-directory: ${{github.workspace}}
       shell: bash
-      run: COV_VALUE=$(cpptestcov query -coverage LC .coverage) && echo "Cov result $COV_VALUE"
+      run: COV_VALUE=$(cpptestcov query -coverage LC .coverage) && if [ $COV_VALUE -lt $LINE_COV_GATE ]; then echo "Failed"; false; else echo "Passed"; true; fi
       
 
