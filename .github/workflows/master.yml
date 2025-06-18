@@ -88,6 +88,14 @@ jobs:
       id: deployment
       uses: actions/deploy-pages@v4
 
+    - name: Archive Reports
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: CpptestReports
+        include-hidden-files: true
+        path: .coverage/
+
     - name: Report to DTP
       working-directory: ${{github.workspace}}
       shell: bash
