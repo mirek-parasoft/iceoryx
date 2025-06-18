@@ -88,13 +88,6 @@ jobs:
       id: deployment
       uses: actions/deploy-pages@v4
 
-    - name: Archive Reports
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: CpptestReports
-        path: .coverage/
-
     - name: Report to DTP
       working-directory: ${{github.workspace}}
       shell: bash
