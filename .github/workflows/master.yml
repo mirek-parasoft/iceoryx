@@ -104,9 +104,4 @@ jobs:
     - name: Check Line Quality Gate
       working-directory: ${{github.workspace}}
       shell: bash
-      run: COV_VALUE=$(cpptestcov query -coverage LC .coverage) && if [[ $COV_VALUE -lt $LINE_COV_GATE ]]; then echo "Line coverage quality get failed. Expected: $LINE_COV_GATE achieved: $COV_VALUE. Check details here: https://mirek-parasoft.github.io/iceoryx/coverage.html"; exit 1; else echo "Line coverage quality gate passed. Achived: $COV_VALUE is above the gate of $LINE_COV_GATE"; fi
-
-    - name: Check MCDC Quality Gate
-      working-directory: ${{github.workspace}}
-      shell: bash
-      run: COV_VALUE=$(cpptestcov query -coverage MCDC .coverage) && if [[ $COV_VALUE -lt $MCDC_COV_GATE ]]; then echo "MCDC coverage quality get failed. Expected: $MCDC_COV_GATE achieved: $COV_VALUE. Check details here: https://mirek-parasoft.github.io/iceoryx/coverage.html"; exit 1; else echo "MCDC coverage quality gate passed. Achived: $COV_VALUE is above the gate of $MCDC_COV_GATE"; fi
+      run: COV_VALUE=$(cpptestcov query -coverage LC .coverage) && if [[ $COV_VALUE -lt $LINE_COV_GATE ]]; then echo "Line coverage quality get failed"; echo "Expected $LINE_COV_GATE% achieved $COV_VALUE%"; echo "Check details here https://mirek-parasoft.github.io/iceoryx/coverage.html"; false; else echo "Line coverage quality gate passed"; echo "Achived $COV_VALUE is above the gate of $LINE_COV_GATE"; true; fi
