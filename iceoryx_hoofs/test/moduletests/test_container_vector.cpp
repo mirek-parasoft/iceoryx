@@ -1090,7 +1090,7 @@ TEST_F(vector_test, TwoEmptyVectorOfDifferentCapacityAreEqual)
 
 TEST_F(vector_test, TwoEqualVectorsWithSameCapacityAreEqual)
 {
-     
+    ::testing::Test::RecordProperty("REQ", "ICO-6"); 
     vector<int, 10> a;
     vector<int, 10> b;
 
@@ -1107,7 +1107,7 @@ TEST_F(vector_test, TwoEqualVectorsWithSameCapacityAreEqual)
 
 TEST_F(vector_test, TwoEqualVectorsWithDifferentCapacityAreEqual)
 {
-     
+    ::testing::Test::RecordProperty("REQ", "ICO-5"); 
     vector<int, 10> a;
     vector<int, 20> b;
 
@@ -1124,7 +1124,7 @@ TEST_F(vector_test, TwoEqualVectorsWithDifferentCapacityAreEqual)
 
 TEST_F(vector_test, TwoVectorsWithDifferentSizeAndSameCapacityAreNotEqual)
 {
-     
+    ::testing::Test::RecordProperty("REQ", "ICO-2"); 
     vector<int, 10> a;
     vector<int, 10> b;
 
@@ -1138,7 +1138,7 @@ TEST_F(vector_test, TwoVectorsWithDifferentSizeAndSameCapacityAreNotEqual)
 
 TEST_F(vector_test, TwoNonEqualVectorsWithDifferentCapacityAreNotEqual)
 {
-     
+    ::testing::Test::RecordProperty("REQ", "ICO-2"); 
     vector<int, 10> a;
     a.emplace_back(7);
     a.emplace_back(8);
@@ -1155,7 +1155,7 @@ TEST_F(vector_test, TwoNonEqualVectorsWithDifferentCapacityAreNotEqual)
 
 TEST_F(vector_test, SubsetVectorWithSameCapacityIsNotEqual)
 {
-     
+    ::testing::Test::RecordProperty("REQ", "ICO-3"); 
     vector<int, 10> a;
     vector<int, 10> b;
     a.emplace_back(7);
@@ -1171,7 +1171,7 @@ TEST_F(vector_test, SubsetVectorWithSameCapacityIsNotEqual)
 
 TEST_F(vector_test, SubsetVectorWithDifferentCapacityIsNotEqual)
 {
-     
+    ::testing::Test::RecordProperty("REQ", "ICO-7"); 
     vector<int, 10> a;
     a.emplace_back(11);
     a.emplace_back(12);
@@ -1187,7 +1187,7 @@ TEST_F(vector_test, SubsetVectorWithDifferentCapacityIsNotEqual)
 
 TEST_F(vector_test, PartiallyEqualVectorsWithSameCapacityAreNotEqual)
 {
-     
+    ::testing::Test::RecordProperty("REQ", "ICO-6"); 
     vector<int, 10> a;
     vector<int, 10> b;
 
@@ -1204,7 +1204,7 @@ TEST_F(vector_test, PartiallyEqualVectorsWithSameCapacityAreNotEqual)
 
 TEST_F(vector_test, PartiallyEqualVectorsWithDifferentCapacityAreNotEqual)
 {
-     
+    ::testing::Test::RecordProperty("REQ", "ICO-4"); 
     vector<int, 10> a;
     a.emplace_back(17);
     a.emplace_back(18);
@@ -1221,7 +1221,7 @@ TEST_F(vector_test, PartiallyEqualVectorsWithDifferentCapacityAreNotEqual)
 
 TEST_F(vector_test, FullVectorDestroysElementsInReverseOrder)
 {
-     
+    ::testing::Test::RecordProperty("REQ", "ICO-3"); 
     static constexpr uint64_t VECTOR_CAPACITY = 35U;
     static constexpr uint64_t INDEX_END = VECTOR_CAPACITY - 1U;
     static constexpr uint64_t SOME_OFFSET = 9128U;
@@ -1244,7 +1244,7 @@ TEST_F(vector_test, FullVectorDestroysElementsInReverseOrder)
 
 TEST_F(vector_test, PartiallyFullVectorDestroysElementsInReverseOrder)
 {
-     
+    ::testing::Test::RecordProperty("REQ", "ICO-1"); 
     static constexpr uint64_t VECTOR_CAPACITY = 40U;
     static constexpr uint64_t VECTOR_SIZE = 20U;
     static constexpr uint64_t INDEX_END = VECTOR_SIZE - 1U;
@@ -1268,20 +1268,20 @@ TEST_F(vector_test, PartiallyFullVectorDestroysElementsInReverseOrder)
 
 TEST_F(vector_test, PopBackReturnsFalseOnEmptyVector)
 {
-     
+    ::testing::Test::RecordProperty("REQ", "ICO-5"); 
     EXPECT_FALSE(sut.pop_back());
 }
 
 TEST_F(vector_test, PopBackReturnsTrueOnNonEmptyVector)
 {
-     
+    ::testing::Test::RecordProperty("REQ", "ICO-6"); 
     sut.emplace_back(123U);
     EXPECT_TRUE(sut.pop_back());
 }
 
 TEST_F(vector_test, PopBackReturnsTrueTillItsEmpty)
 {
-     
+    ::testing::Test::RecordProperty("REQ", "ICO-4"); 
     static constexpr uint64_t VECTOR_SIZE = 5U;
     for (uint64_t i = 0U; i < VECTOR_SIZE; ++i)
     {
@@ -1298,19 +1298,19 @@ TEST_F(vector_test, PopBackReturnsTrueTillItsEmpty)
 
 TEST_F(vector_test, ResizeFailsWhenCountIsGreaterThanCapacity)
 {
-     
+    ::testing::Test::RecordProperty("REQ", "ICO-1"); 
     EXPECT_FALSE(sut.resize(sut.capacity() + 1U));
 }
 
 TEST_F(vector_test, ResizeWithTemplateValueFailsWhenCountIsGreaterThanCapacity)
 {
-     
+    ::testing::Test::RecordProperty("REQ", "ICO-2");  
     EXPECT_FALSE(sut.resize(sut.capacity() + 1U, 12U));
 }
 
 TEST_F(vector_test, SizeIncreaseWithResizeAndDefaultCTorWorks)
 {
-     
+    ::testing::Test::RecordProperty("REQ", "ICO-4"); 
     class DefaultCTor
     {
       public:
@@ -1329,7 +1329,7 @@ TEST_F(vector_test, SizeIncreaseWithResizeAndDefaultCTorWorks)
 
 TEST_F(vector_test, SizeIncreaseWithResizeAndTemplateValueWorks)
 {
-     
+    ::testing::Test::RecordProperty("REQ", "ICO-3");  
     EXPECT_TRUE(sut.resize(4U, 421337U));
     ASSERT_THAT(sut.size(), Eq(4U));
     for (auto& e : sut)
@@ -1340,7 +1340,7 @@ TEST_F(vector_test, SizeIncreaseWithResizeAndTemplateValueWorks)
 
 TEST_F(vector_test, SizeDecreaseWithResizeAndDefaultCTorWorks)
 {
-     
+    ::testing::Test::RecordProperty("REQ", "ICO-2"); 
     constexpr uint64_t CAPACITY{10};
     vector<CTorTest, CAPACITY> sut;
     for (uint64_t i = 0U; i < CAPACITY; ++i)
@@ -1358,7 +1358,7 @@ TEST_F(vector_test, SizeDecreaseWithResizeAndDefaultCTorWorks)
 
 TEST_F(vector_test, SizeDecreaseWithResizeAndTemplateValueWorks)
 {
-     
+    ::testing::Test::RecordProperty("REQ", "ICO-1"); 
     constexpr uint64_t CAPACITY{10};
     vector<CTorTest, CAPACITY> sut;
     for (uint64_t i = 0U; i < CAPACITY; ++i)
@@ -1401,7 +1401,7 @@ TEST_F(vector_test, ResizeWithTemplateValueChangesNothingIfSizeAlreadyFits)
 
 TEST_F(vector_test, EmplaceInEmptyVectorWorks)
 {
-     
+    ::testing::Test::RecordProperty("REQ", "ICO-1"); 
     EXPECT_TRUE(sut.emplace(0U, 123U));
     ASSERT_THAT(sut.size(), Eq(1U));
     EXPECT_THAT(sut[0], Eq(123U));
@@ -1410,7 +1410,7 @@ TEST_F(vector_test, EmplaceInEmptyVectorWorks)
 
 TEST_F(vector_test, EmplaceAtFrontTillFullWorks)
 {
-     
+    ::testing::Test::RecordProperty("REQ", "ICO-2");  
     for (uint64_t i = 0U; i < VECTOR_CAPACITY; ++i)
     {
         EXPECT_TRUE(sut.emplace(0U, i));
@@ -1427,7 +1427,7 @@ TEST_F(vector_test, EmplaceAtFrontTillFullWorks)
 
 TEST_F(vector_test, EmplacingElementInTheMiddleCallsDTor)
 {
-     
+    ::testing::Test::RecordProperty("REQ", "ICO-3"); 
     constexpr uint64_t CAPACITY_OF_VECTOR{10U};
     constexpr uint64_t EXPECTED_NUMBER_OF_CTOR_CALLS{CAPACITY_OF_VECTOR};
     constexpr uint64_t EMPLACE_POSITION{5U};
@@ -1453,7 +1453,7 @@ TEST_F(vector_test, EmplacingElementInTheMiddleCallsDTor)
 
 TEST_F(vector_test, EmplaceInTheMiddleMovesElementsToTheRight)
 {
-     
+    ::testing::Test::RecordProperty("REQ", "ICO-4"); 
     sut.emplace_back(0U);
     sut.emplace_back(1U);
     sut.emplace_back(2U);
@@ -1470,7 +1470,7 @@ TEST_F(vector_test, EmplaceInTheMiddleMovesElementsToTheRight)
 
 TEST_F(vector_test, EmplaceWhenFullReturnsFalse)
 {
-     
+    ::testing::Test::RecordProperty("REQ", "ICO-5"); 
     for (uint64_t i = 0U; i < VECTOR_CAPACITY; ++i)
     {
         sut.emplace_back(i);
@@ -1483,7 +1483,7 @@ TEST_F(vector_test, EmplaceWhenFullReturnsFalse)
 
 TEST_F(vector_test, EmplaceWhenPositionExceedsCapacityReturnsFalse)
 {
-     
+    ::testing::Test::RecordProperty("REQ", "ICO-6"); 
     EXPECT_FALSE(sut.emplace(sut.capacity() + 10U, 5U));
     EXPECT_THAT(sut.size(), Eq(0));
 }
@@ -1505,7 +1505,7 @@ TEST_F(vector_test, EmplaceAtEndWorks)
 
 TEST_F(vector_test, EmplaceAtPositionAfterEndBeforeCapacityExceedsFails)
 {
-    ::testing::Test::RecordProperty("REQ", "CIC-7"); 
+    ::testing::Test::RecordProperty("REQ", "ICO-7"); 
     sut.emplace_back(0U);
     sut.emplace_back(1U);
 
