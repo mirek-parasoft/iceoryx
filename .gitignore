@@ -21,3 +21,5 @@ MODULE.bazel.lock
 .coverage/*
 .cpptest/*
 cpptest_results.clog
+test_detail.xml
+build_and_run_local.sh
